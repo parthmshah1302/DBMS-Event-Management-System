@@ -15,30 +15,36 @@ app.config['MYSQL_DB']=db['mysql_db']
 
 mysql=MySQL(app)
 
-
+# The very basic home page
 @app.route('/', methods=['GET','POST'])
 def index():
+    return ('This is the Home Page!')
+
+
+# This function inserts data to login table
+@app.route('/login', methods=['GET','POST'])
+def login():
     if request.method=='POST':
         userDetails=request.form
-        name=userDetails['name']
         email=userDetails['email']
+        password=userDetails['password']
 
         cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(name,email))
+        cur.execute("INSERT INTO login(email, pass) VALUES(%s, %s)",(email,password))
         mysql.connection.commit()
         cur.close()
         return redirect('/users')
-    return render_template('index.html')
+    return render_template('login.html')
 
 
-
-@app.route('/users')
-def users():
+# This function displays the loginData
+@app.route('/loginData')
+def loginData():
     cur=mysql.connection.cursor()
-    resultValue=cur.execute("SELECT * FROM users")
+    resultValue=cur.execute("SELECT * FROM login")
     if resultValue>0:
         userDetails=cur.fetchall()
-        return render_template('users.html',userDetails=userDetails)
+        return render_template('loginData.html',userDetails=userDetails)
 
 if __name__=='__main__':
     app.run(debug=True)
