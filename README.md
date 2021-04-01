@@ -49,7 +49,7 @@ navigate to http://localhost:5000/login and add entries
 
 ## Author
 
-👤 **Parth Shah, Malav Doshi, Samkit Kundalia**
+👤 **Parth Shah(https://www.linkedin.com/in/parthmshah1302/), Malav Doshi, Samkit Kundalia**
 
 
 ## 🤝 Contributing
