@@ -27,7 +27,10 @@
         Date <input type="date" name="bill_date" id=""/>
         <br>
         <br>
-        
+        Email Address<select name="email">
+            {% for email in emailTuple %}
+            <option value="{{email[0]}}">{{email[0]}}</option>
+            {%endfor%}</select>
         
         <input type="submit"/>
     </form>

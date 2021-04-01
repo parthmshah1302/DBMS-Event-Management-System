@@ -81,6 +81,13 @@ def eventsData():
 
 @app.route('/bill',methods=['GET','POST'])
 def bill():
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT email FROM login")
+    emailTuple=cur.fetchall()
+    
+    mysql.connection.commit()
+    
+    cur.close()
     if request.method=='POST':
         billDetails=request.form
         order_no=billDetails['order_no']
@@ -88,19 +95,21 @@ def bill():
         tax=billDetails['tax']
         del_charge=billDetails['del_charge']
         bill_date=billDetails['bill_date']
+        email=billDetails['email']
+        
         cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO bill( order_no, amount, tax, del_charge,bill_date) VALUES(%s,%s,%s,%s,%s)",(order_no, amount, tax, del_charge,bill_date))
+        cur.execute("INSERT INTO bill( order_no, amount, tax, del_charge,bill_date,email) VALUES(%s,%s,%s,%s,%s,%s)",(order_no, amount, tax, del_charge,bill_date,email))
         mysql.connection.commit()
         cur.close()
         
         return redirect('/billData')
-    return render_template('bill.html')
+    return render_template('bill.html',emailTuple=emailTuple)
 
 # This function displays the billData
 @app.route('/billData')
 def billData():
     cur=mysql.connection.cursor()
-    resultValue=cur.execute("SELECT bill_no,order_no,amount,tax,del_charge,amount+del_charge+amount*tax/100,DATE_FORMAT(bill_date, '%M %d %Y') from bill")
+    resultValue=cur.execute("SELECT bill_no,order_no,amount,tax,del_charge,amount+del_charge+amount*tax/100,DATE_FORMAT(bill_date, '%M %d %Y'),email from bill")
     if resultValue>0:
         billDetails=cur.fetchall()
         return render_template('billData.html',billDetails=billDetails)
