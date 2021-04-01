@@ -25,6 +25,8 @@ create table event_table(
   event_type varchar(50),
   index (event_name)
 );
+alter table event_table
+add unique (event_no);
 create table bill(
   bill_no int,
   order_no int,
