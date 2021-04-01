@@ -13,6 +13,7 @@ app.config['MYSQL_USER']=db['mysql_user']
 app.config['MYSQL_PASSWORD']=db['mysql_password']
 app.config['MYSQL_DB']=db['mysql_db']
 
+
 mysql=MySQL(app)
 
 # The very basic home page
@@ -59,6 +60,9 @@ def events():
         event_time=eventDetails['event_time']
         venue=eventDetails['venue']
         event_type=eventDetails['event_type']
+        
+
+
         cur=mysql.connection.cursor()
         cur.execute("INSERT INTO event_table( event_name, event_date, venue, event_time, event_type) VALUES(%s,%s,%s,%s,%s)",(event_name,event_date,venue,event_time,event_type))
         mysql.connection.commit()
@@ -67,7 +71,10 @@ def events():
         return redirect('/eventsData')
     return render_template('events.html')
 
-# This function displays the eventsData
+
+
+
+# This displays the events table
 @app.route('/eventsData')
 def eventsData():
     cur=mysql.connection.cursor()
@@ -75,7 +82,7 @@ def eventsData():
     if resultValue>0:
         eventDetails=cur.fetchall()
         return render_template('eventsData.html',eventDetails=eventDetails)
-
+        
 # Inserts data to bill_table
 
 
@@ -113,6 +120,36 @@ def billData():
     if resultValue>0:
         billDetails=cur.fetchall()
         return render_template('billData.html',billDetails=billDetails)
+    else:
+        return('<h1 style="text-align:center">No entry exists</h1>')
+
+# This creates the vendors tables
+@app.route('/vendors',methods=['GET','POST'])
+def vendors():
+    if request.method=='POST':
+        vendorDetails=request.form
+        products_taken=vendorDetails['products_taken']
+        amount=vendorDetails['amount']
+        invoice_no=vendorDetails['invoice_no']
+        vendor_name=vendorDetails['vendor_name']
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO vendors(products_taken,amount,invoice_no,vendor_name) VALUES(%s,%s,%s,%s)",(products_taken,amount,invoice_no,vendor_name))
+        mysql.connection.commit()
+        cur.close()
+        
+        return redirect('/vendorsData')
+    return render_template('vendors.html')
+
+# This displays the vendors tables
+@app.route('/vendorsData')
+def vendorsData():
+    cur=mysql.connection.cursor()
+    resultValue=cur.execute("SELECT products_taken,amount,invoice_no,vendor_name from vendors")
+    if resultValue>0:
+        vendorDetails=cur.fetchall()
+        return render_template('vendorsData.html',vendorDetails=vendorDetails)
+    else:
+        return('<h1 style="text-align:center">No entry exists</h1>')
 
 if __name__=='__main__':
     app.run(debug=True)
