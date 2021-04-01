@@ -1,0 +1,23 @@
+<table border="1">
+    <th>Balance</th>
+    <th>Miscellaneous Charges</th>
+    <th>Receipt Name</th>
+    <th>Date</th>
+    <th>Bill Number</th>
+    <th>Total Amount</th>
+    <th>Paid Amount</th>
+    
+    
+    
+    {% for acc in accountDetails%}
+    <tr>
+        <td>{{acc[0]}}</td>
+        <td>{{acc[1]}}</td>
+        <td>{{acc[2]}}</td>
+        <td>{{acc[3]}}</td>
+        <td>{{acc[4]}}</td>
+        <td>{{acc[5]}}</td>
+        <td>{{acc[6]}}</td>
+    </tr>
+    {%endfor%}
+</table>
