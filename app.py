@@ -96,9 +96,9 @@ def bill():
         del_charge=billDetails['del_charge']
         bill_date=billDetails['bill_date']
         email=billDetails['email']
-        
+        final_amt=int(amount)+int(amount)*int(tax)/100+int(del_charge)
         cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO bill( order_no, amount, tax, del_charge,bill_date,email) VALUES(%s,%s,%s,%s,%s,%s)",(order_no, amount, tax, del_charge,bill_date,email))
+        cur.execute("INSERT INTO bill( order_no, amount, tax, del_charge,final_amt,bill_date,email) VALUES(%s,%s,%s,%s,%s,%s,%s)",(order_no, amount, tax, del_charge,final_amt,bill_date,email))
         mysql.connection.commit()
         cur.close()
         
@@ -109,7 +109,7 @@ def bill():
 @app.route('/billData')
 def billData():
     cur=mysql.connection.cursor()
-    resultValue=cur.execute("SELECT bill_no,order_no,amount,tax,del_charge,amount+del_charge+amount*tax/100,DATE_FORMAT(bill_date, '%M %d %Y'),email from bill")
+    resultValue=cur.execute("SELECT bill_no,order_no,amount,tax,del_charge,final_amt,DATE_FORMAT(bill_date, '%M %d %Y'),email from bill")
     if resultValue>0:
         billDetails=cur.fetchall()
         return render_template('billData.html',billDetails=billDetails)
