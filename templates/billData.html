@@ -1,0 +1,25 @@
+<table border="1">
+    <th>Bill Number</th>
+    <th>Order Number</th>
+    <th>Amount</th>
+    <th>Tax (%)</th>
+    <th>Delivery Charge</th>
+    <th>Final Amount</th>
+    <th>Bill Date</th>
+    <th>Email</th>
+    
+    
+    
+    {% for bill in billDetails%}
+    <tr>
+        <td>{{bill[0]}}</td>
+        <td>{{bill[1]}}</td>
+        <td>{{bill[2]}}</td>
+        <td>{{bill[3]}}</td>
+        <td>{{bill[4]}}</td>
+        <td>{{bill[5]}}</td>
+        <td>{{bill[6]}}</td>
+        <!-- <td>{{bill[7]}}</td> -->
+    </tr>
+    {%endfor%}
+</table>

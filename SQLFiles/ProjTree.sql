@@ -28,7 +28,7 @@ create table event_table(
 
 
 create table bill(
-  bill_no int,
+  bill_no int auto_increment unique,
   order_no int,
   amount double,
   tax double,
@@ -39,6 +39,8 @@ create table bill(
   foreign key(email) references login(email),
   primary key(bill_no, order_no)
 );
+
+
 create table account_table(
   balance double,
   misc_charges double,
