@@ -46,7 +46,6 @@ event_time=time.strftime("%H:%M:%S",curr_time)
 def events():
     if request.method=='POST':
         eventDetails=request.form
-        event_no=eventDetails['event_no']
         event_name=eventDetails['event_name']
         event_date=eventDetails['event_date']
         event_time=eventDetails['event_time']
@@ -56,7 +55,7 @@ def events():
 
 
         cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO event_table(event_no, event_name, event_date, venue, event_time, event_type) VALUES(%s,%s,%s,%s,%s,%s)",(int(event_no),event_name,event_date,venue,event_time,event_type))
+        cur.execute("INSERT INTO event_table( event_name, event_date, venue, event_time, event_type) VALUES(%s,%s,%s,%s,%s)",(event_name,event_date,venue,event_time,event_type))
         mysql.connection.commit()
         cur.close()
         
@@ -77,7 +76,7 @@ def loginData():
 @app.route('/eventsData')
 def eventsData():
     cur=mysql.connection.cursor()
-    resultValue=cur.execute("SELECT * from event_table")
+    resultValue=cur.execute("SELECT event_no,event_name,DATE_FORMAT(event_date, '%M %d %Y'),venue,TIME_FORMAT(event_time, '%r') from event_table")
     if resultValue>0:
         eventDetails=cur.fetchall()
         return render_template('eventsData.html',eventDetails=eventDetails)
