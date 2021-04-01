@@ -151,5 +151,31 @@ def vendorsData():
     else:
         return('<h1 style="text-align:center">No entry exists</h1>')
 
+@app.route('/inventory',methods=['GET','POST'])
+def inventory():
+    if request.method=='POST':
+        inventoryDetails=request.form
+        item_code=inventoryDetails['item_code']
+        item_name=inventoryDetails['item_name']
+        quantity=inventoryDetails['quantity']
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO inventory(item_code,item_name,quantity) VALUES(%s,%s,%s)",(item_code,item_name,quantity))
+        mysql.connection.commit()
+        cur.close()
+        
+        return redirect('/inventoryData')
+    return render_template('inventory.html')
+
+# This displays the inventory tables
+@app.route('/inventoryData')
+def inventoryData():
+    cur=mysql.connection.cursor()
+    resultValue=cur.execute("SELECT item_code,item_name,quantity from inventory")
+    if resultValue>0:
+        inventoryDetails=cur.fetchall()
+        return render_template('inventoryData.html',inventoryDetails=inventoryDetails)
+    else:
+        return('<h1 style="text-align:center">No entry exists</h1>')
+
 if __name__=='__main__':
     app.run(debug=True)
