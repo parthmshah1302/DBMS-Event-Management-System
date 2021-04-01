@@ -149,7 +149,7 @@ def account_table():
 @app.route('/accountData')
 def accountData():
     cur=mysql.connection.cursor()
-    resultValue=cur.execute("SELECT balance,misc_charges,receipt_name,account_date,bill_no,tot_amt, paid_amt  from account_table")
+    resultValue=cur.execute("SELECT balance,misc_charges,receipt_name,account_date,bill_no, tot_amt, paid_amt  from account_table")
     if resultValue>0:
         accountDetails=cur.fetchall()
         return render_template('accountData.html',accountDetails=accountDetails)
@@ -159,24 +159,50 @@ def accountData():
 if __name__=='__main__':
     app.run(debug=True)
 
-# @app.route(/registration, methods=['GET', 'POST'])
-# def registration();
-# if request.method='POST';
-#     registrationdets=request.form
-#     fees=registrationdets['fees']
-#     customer_name=registrationdets['customer_name']
-#     mob_name=registrationdets['mob_name']
-#     email=registrationdets['email']
-#     payment_mode=registrationdets['payment_mode']
-#     sr_no=registrationdets['sr_no']
-#     college_name=registrationdets['college_name']
-#     register_receipt=registrationdets['register_receipt']
-#     event_name=registrationdets['event_name']
-#     event_no=registrationdets['event_no']
-#     cur=mysql.connection.cursor()
-#     cur.execute("INSERT INTO registration(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no) VALUES(%s,%s,%s,%s,%s,%s)",(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no))
-#     mysql.connection.commit()
-#     cur.close()
+#Insert in Registration
 
-#         return redirect('/RegistrationData')
-#     return render_template('registration.html')
+@app.route('/registration',methods=['GET','POST'])
+def registration():
+
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT email FROM login")
+    emailTuple=cur.fetchall()
+
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT event_no FROM event_table")
+    event_no_Tuple=cur.fetchall()
+
+    if request.method=='POST':
+        registrationdets=request.form
+        fees=registrationdets['fees']
+        customer_name=registrationdets['customer_name']
+        mob_name=registrationdets['mob_name']
+        email=registrationdets['email']
+        payment_mode=registrationdets['payment_mode']
+        sr_no=registrationdets['sr_no']
+        college_name=registrationdets['college_name']
+        register_receipt=registrationdets['register_receipt']
+        event_name=registrationdets['event_name']
+        event_no=registrationdets['event_no']
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO registration(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no) VALUES(%s,%s,%s,%s,%s,%s)",(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect('/registrationData')
+    return render_template('registration.html',emailTuple=emailTuple,event_no_Tuple=event_no_Tuple)
+
+#This fucntion displays registration table
+
+@app.route('/registrationData')
+def registrationData():
+    cur=mysql.connection.cursor()
+    resultValue=cur.execute("SELECT fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no from registration")
+    if resultValue>0:
+        accountDetails=cur.fetchall()
+        return render_template('accountData.html',accountDetails=accountDetails)
+    else:
+        return('<h1 style="text-align:center"> No entry exists</h1>')
+      
+if __name__=='__main__':
+    app.run(debug=True)   
