@@ -1,5 +1,5 @@
-create database projtree;
-use projtree;
+create database dbmsEventManagement;
+use dbmsEventManagement;
 
 -- drop table feedback;
 -- drop table inventory;
