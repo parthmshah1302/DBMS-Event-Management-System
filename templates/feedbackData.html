@@ -1,0 +1,20 @@
+<table border="1">
+    <th>Email ID</th>
+    <th>Title</th>
+    <th>Message</th>
+    <th>Date</th>
+    <th>Time</th>
+    
+    
+    
+    {% for feedback in feedbackDetails%}
+    <tr>
+        <td>{{feedback[0]}}</td>
+        <td>{{feedback[1]}}</td>
+        <td>{{feedback[2]}}</td>
+        <td>{{feedback[3]}}</td>
+        <td>{{feedback[4]}}</td>
+        
+    </tr>
+    {%endfor%}
+</table>

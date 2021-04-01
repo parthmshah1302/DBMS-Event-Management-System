@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_mysqldb import MySQL
 import yaml
 import time
-
+from datetime import date,datetime
 
 app=Flask(__name__)
 
@@ -176,6 +176,57 @@ def inventoryData():
         return render_template('inventoryData.html',inventoryDetails=inventoryDetails)
     else:
         return('<h1 style="text-align:center">No entry exists</h1>')
+
+@app.route('/feedback',methods=['GET','POST'])
+def feedback():
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT email FROM login")
+    emailTuple=cur.fetchall()
+    
+    mysql.connection.commit()
+    if request.method=='POST':
+        feedbackDetails=request.form
+        email=feedbackDetails['email']
+        title=feedbackDetails['title']
+        message=feedbackDetails['message']
+        date=feedbackDetails['feedback_date']
+        feedtime=feedbackDetails['feedtime']
+        # print(today_date)
+        # now=datetime.now()
+        # print(now)
+        # time=now.strftime('%H:%M:%S')
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO feedback(email,title,message,Date,time) VALUES(%s,%s,%s,%s,%s)",(email,title,message,date,feedtime))
+        mysql.connection.commit()
+        cur.close()
+        
+        return redirect('/feedbackData')
+    return render_template('feedback.html',emailTuple=emailTuple)
+
+# This displays the feedback tables
+@app.route('/feedbackData')
+def feedbackData():
+    cur=mysql.connection.cursor()
+    resultValue=cur.execute("SELECT email,title,message,Date,time from feedback")
+    if resultValue>0:
+        feedbackDetails=cur.fetchall()
+        return render_template('feedbackData.html',feedbackDetails=feedbackDetails)
+    else:
+        return('<h1 style="text-align:center">No entry exists</h1>')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__=='__main__':
     app.run(debug=True)

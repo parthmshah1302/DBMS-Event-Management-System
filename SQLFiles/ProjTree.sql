@@ -13,7 +13,7 @@ use dbmsEventManagement;
 -- drop table bill;
 -- drop table event_table;
 -- drop table login;
-
+select * from bill;
 create table login(email varchar(50) primary key, pass varchar(50));
 create table event_table(
   event_no int auto_increment unique,
@@ -121,5 +121,5 @@ create table feedback (
   title varchar(50),
   message varchar(50),
   Date date,
-  time timestamp
+  time time
 );
