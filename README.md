@@ -15,24 +15,18 @@ git clone https://github.com/parthmshah1302/DBMS-Event-Management-System
 ```
 ```sh
 cd DBMS-Event-Management-System
-```
-```sh
 pip install virtualenv
-```
-```sh
 python -m virtualenv env
-```
-```sh
 .\env\Scripts\activate  
-```
-```sh
 pip install -r requirements.txt
+
 ```
 ```sh
 mysql -u root -p  
+run DBMS-EVS.SQL
 ```
 ```sh
-(login MySQL and run DBMS-EVS.SQL)  
+python app.py
 ```
 
 ## Usage

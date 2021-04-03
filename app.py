@@ -277,10 +277,10 @@ def feedback():
         email = feedbackDetails['email']
         title = feedbackDetails['title']
         message = feedbackDetails['message']
-        print(today_date)
+        # print(today_date)
         now = datetime.now()
         now = now.strftime('%H:%M:%S')
-        print(now)
+        # print(now)
 
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO feedback(email,title,message,Date,time) VALUES(%s,%s,%s,%s,%s)",
