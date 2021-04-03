@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="text-align:center">Account Table</h1>
+    <form action="" method="POST">
+        <!-- Sr No <input type="number" name="event_no"/>
+        <br>
+        <br> -->
+        Balance <input type="number" name="balance"/>
+        <br>
+        <br>
+        Miscellaneous Charges <input type="number" name="misc_charges" id=""/>
+        <br>
+        <br>
+        Receipt Name <input type="Text" name="receipt_name" id=""/>
+        <br>
+        <br>
+        Date <input type="date" name="account_date" id=""/>
+        <br>
+        <br>
+        Bill Number <select name="bill_no">
+            {% for bill_no in billno_Tuple %}
+            <option value="{{bill_no[0]}}">{{bill_no[0]}}</option>
+            {%endfor%}</select>
+        <br>
+        <br>
+        Total Amount <input type="number" name="tot_amt" id=""/>
+        <br>
+        <br>
+        Paid Amount <input type="number" name="paid_amt" id=""/>
+        <br>
+        <br>
+        
+        
+        <input type="submit"/>
+    </form>
+</body>
+</html>

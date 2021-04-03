@@ -1,0 +1,18 @@
+<table border="1">
+    <th>Event Number</th>
+    <th>Event Name</th>
+    <th>Event Date</th>
+    <th>Event Location</th>
+    <th>Event Time</th>
+    
+    
+    {% for event in eventDetails%}
+    <tr>
+        <td>{{event[0]}}</td>
+        <td>{{event[1]}}</td>
+        <td>{{event[2]}}</td>
+        <td>{{event[3]}}</td>
+        <td>{{event[4]}}</td>
+    </tr>
+    {%endfor%}
+</table>

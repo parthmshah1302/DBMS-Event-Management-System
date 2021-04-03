@@ -1,0 +1,39 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="text-align:center">Bill Table</h1>
+    <form action="" method="POST">
+        <!-- Sr No <input type="number" name="event_no"/>
+        <br>
+        <br> -->
+        Order Number <input type="number" name="order_no"/>
+        <br>
+        <br>
+        Amount <input type="number" name="amount" id=""/>
+        <br>
+        <br>
+        Tax Percentage <input type="number" name="tax" id=""/>
+        <br>
+        <br>
+        Delivery Charge <input type="number" name="del_charge" id=""/>
+        <br>
+        <br>
+        Date <input type="date" name="bill_date" id=""/>
+        <br>
+        <br>
+        Email Address<select name="email">
+            {% for email in emailTuple %}
+            <option value="{{email[0]}}">{{email[0]}}</option>
+            {%endfor%}</select>
+        
+        <input type="submit"/>
+    </form>
+</body>
+</html>
+

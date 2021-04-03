@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="text-align:center">Bill Table</h1>
+    <form action="" method="POST">
+        <!-- Sr No <input type="number" name="event_no"/>
+        <br>
+        <br> -->
+        Fees <input type="number" name="fees"/>
+        <br>
+        <br>
+        Customer Name <input type="text" name="customer_name" id=""/>
+        <br>
+        <br>
+        Mobile number <input type="number" name="mob_name" id=""/>
+        <br>
+        <br>
+        Email Address<select name="email">
+            {% for email in emailTuple %}
+            <option value="{{email[0]}}">{{email[0]}}</option>
+            {%endfor%}</select>
+        <br>
+        <br>
+        Payment Mode <input type="number" name="payment_mode" id=""/>
+        <br>
+        <br>
+        Serial Number <input type="number" name="sr_no" id=""/>
+        <br>
+        <br>
+        College Name <input type="text" name="college_name" id=""/>
+        <br>
+        <br>
+        Registration Reciept <input type="text" name="register_receipt" id=""/>
+        <br>
+        <br>
+        Event Name <input type="text" name="bill_date" id=""/>
+        <br>
+        <br>
+        <!-- Event Number <input type="number" name="event_no" id=""/> -->
+        Event Number <select name="event_no">
+            {% for event_no in event_table %}
+            <option value="{{event_no[0]}}">{{event_no[0]}}</option>
+            {%endfor%}</select>
+        <br>
+        <br>       
+        <input type="submit"/>
+    </form>
+</body>
+</html>
+

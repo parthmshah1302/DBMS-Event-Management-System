@@ -16,7 +16,7 @@ use dbmsEventManagement;
 
 create table login(email varchar(50) primary key, pass varchar(50));
 create table event_table(
-  event_no int,
+  event_no int auto_increment unique,
   primary key(event_no),
   event_name varchar(50),
   event_date date,
@@ -25,8 +25,10 @@ create table event_table(
   event_type varchar(50),
   index (event_name)
 );
+
+
 create table bill(
-  bill_no int,
+  bill_no int auto_increment unique,
   order_no int,
   amount double,
   tax double,
@@ -37,6 +39,8 @@ create table bill(
   foreign key(email) references login(email),
   primary key(bill_no, order_no)
 );
+
+
 create table account_table(
   balance double,
   misc_charges double,
