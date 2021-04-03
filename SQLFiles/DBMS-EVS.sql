@@ -121,5 +121,6 @@ create table feedback (
   title varchar(50),
   message varchar(50),
   Date date,
-  time timestamp
+  time time
 );
+alter table sponsors modify mob_num varchar(10);

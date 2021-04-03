@@ -1,0 +1,17 @@
+<table border="1">
+    <th>Item Code</th>
+    <th>Item Name</th>
+    <th>Quantity</th>
+    
+    
+    
+    {% for inventory in inventoryDetails%}
+    <tr>
+        
+        <td>{{inventory[0]}}</td>
+        <td>{{inventory[1]}}</td>
+        <td>{{inventory[2]}}</td>
+        
+    </tr>
+    {%endfor%}
+</table>

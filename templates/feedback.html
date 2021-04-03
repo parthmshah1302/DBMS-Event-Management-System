@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="http://localhost:5000/">Go to Home</a></button>
+    <br>
+    <h1 style="text-align:center">Feedback Table<button><a href="http://localhost:5000/feedbackData">Current Dataset</a></button></h1>
+    <form action="" method="POST" id="feedbackForm">
+        <!-- Sr No <input type="number" name="event_no"/>
+        <br>
+        <br> -->
+        Email Address<select name="email">
+            {% for email in emailTuple %}
+            <option value="{{email[0]}}">{{email[0]}}</option>
+            {%endfor%}</select>
+            <br>
+            <br>
+        Title <input type="text" name="title"/>
+        <br>
+        <br>
+        Feedback
+        <br>
+        <br>
+        <textarea rows="4" cols="50" name="message" form="feedbackForm" placeholder="Enter text here..."></textarea>   
+        <br>
+        <br>
+        <!-- Date <input type="date" name="feedback_date" id=""/>
+        <br>
+        <br>
+        Time <input type="time" name="feedtime" id=""/>
+        <br>
+        <br> -->
+        
+        <input type="submit"/>
+    </form>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<table border="1">
+    <th>Sponsorship Package</th>
+    <th>Deliverables</th>
+    
+    
+    
+    {% for sponsorship in sponsorshipDetails%}
+    <tr>
+        <td>{{sponsorship[0]}}</td>
+        <td>{{sponsorship[1]}}</td>
+    </tr>
+    {%endfor%}
+</table>

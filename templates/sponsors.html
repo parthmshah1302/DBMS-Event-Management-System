@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="http://localhost:5000/">Go to Home</a></button>
+    <br>
+    <h1 style="text-align:center">Sponsorship Table<button><a href="/sponsorsData">Current Dataset</a></button></h1>
+    <form action="" method="POST" id="sponsorsForm">
+        <!-- Sr No <input type="number" name="event_no"/>
+        <br>
+        <br> -->
+        Sponsor's Name <input type="text" name="sponsors_name" id="">
+        <br>
+        <br>
+        Sponsor's Address <br><br><textarea rows="4" cols="50" name="address" form="sponsorsForm" placeholder="Enter text here..."></textarea>   
+        <br><br>
+        Amount (in ₹)<input type="number" name="amount" id="">
+        <br><br>
+        Mobile Number <input type="tel" name="mob_num" id="">
+        <br><br>
+        Sponsor Type<select name="sponsor_type">
+            {% for sponsorship in sponsorshipTuple %}
+            <option value="{{sponsorship[0]}}">{{sponsorship[0]}}</option>
+            {%endfor%}</select>
+            <br>
+            <br>
+        Event No<select name="event_no">
+            {% for eventno in eventnoTuple %}
+            <option value="{{eventno[0]}}">{{eventno[0]}}</option>
+            {%endfor%}</select>
+            <br>
+            <br>
+        Event Name<select name="event_name">
+            {% for eventname in eventnameTuple %}
+            <option value="{{eventname[0]}}">{{eventname[0]}}</option>
+            {%endfor%}</select>
+            <br>
+            <br>    
+        <!-- Date <input type="date" name="feedback_date" id=""/>
+        <br>
+        <br>
+        Time <input type="time" name="feedtime" id=""/>
+        <br>
+        <br> -->
+        
+        <input type="submit"/>
+    </form>
+</body>
+</html>
