@@ -177,6 +177,9 @@ def inventoryData():
     else:
         return('<h1 style="text-align:center">No entry exists</h1>')
 
+
+# This creates feedback table
+today_date=date.today().strftime('%Y-%m-%d')
 @app.route('/feedback',methods=['GET','POST'])
 def feedback():
     cur=mysql.connection.cursor()
@@ -189,14 +192,13 @@ def feedback():
         email=feedbackDetails['email']
         title=feedbackDetails['title']
         message=feedbackDetails['message']
-        date=feedbackDetails['feedback_date']
-        feedtime=feedbackDetails['feedtime']
-        # print(today_date)
-        # now=datetime.now()
-        # print(now)
-        # time=now.strftime('%H:%M:%S')
+        print(today_date)
+        now=datetime.now()
+        now=now.strftime('%H:%M:%S')
+        print(now)
+        
         cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO feedback(email,title,message,Date,time) VALUES(%s,%s,%s,%s,%s)",(email,title,message,date,feedtime))
+        cur.execute("INSERT INTO feedback(email,title,message,Date,time) VALUES(%s,%s,%s,%s,%s)",(email,title,message,today_date,now))
         mysql.connection.commit()
         cur.close()
         

@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1 style="text-align:center">Feedback Table</h1>
-    <form action="" method="POST">
+    <form action="" method="POST" id="feedbackForm">
         <!-- Sr No <input type="number" name="event_no"/>
         <br>
         <br> -->
@@ -21,20 +21,20 @@
         Title <input type="text" name="title"/>
         <br>
         <br>
-        <label for="message">Feedback</label>
+        Feedback
         <br>
         <br>
-        <textarea id="" name="message" rows="4" cols="50">
+        <textarea rows="4" cols="50" name="message" form="feedbackForm" placeholder="Enter text here...">
     
         </textarea>   
         <br>
         <br>
-        Date <input type="date" name="feedback_date" id=""/>
+        <!-- Date <input type="date" name="feedback_date" id=""/>
         <br>
         <br>
         Time <input type="time" name="feedtime" id=""/>
         <br>
-        <br>
+        <br> -->
         
         <input type="submit"/>
     </form>
