@@ -193,6 +193,31 @@ def inventoryData():
     else:
         return('<h1 style="text-align:center">No entry exists</h1>')
 
+# This creates sponsorship table
+@app.route('/sponsorship',methods=['GET','POST'])
+def sponsorship():
+    if request.method=='POST':
+        sponsorshipDetails=request.form
+        sponsor_type=sponsorshipDetails['sponsor_type']
+        deliverables=sponsorshipDetails['deliverables']
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO sponsorship_package(sponsor_type,deliverables) VALUES(%s,%s)",(sponsor_type,deliverables))
+        mysql.connection.commit()
+        cur.close()
+        return redirect('/sponsorshipData')
+    return render_template('sponsorship.html')
+
+# This displays the sponsorship table 
+@app.route('/sponsorshipData')
+def sponsorshipData():
+    cur = mysql.connection.cursor()
+    resultValue = cur.execute("SELECT sponsor_type,deliverables FROM sponsorship_package")
+    if resultValue > 0:
+        sponsorshipDetails = cur.fetchall()
+        return render_template('sponsorshipData.html', sponsorshipDetails=sponsorshipDetails)
+    else:
+        return('<h1 style="text-align:center">No entry exists</h1>')
+
 
 # This creates feedback table
 today_date = date.today().strftime('%Y-%m-%d')
