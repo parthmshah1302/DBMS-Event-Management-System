@@ -123,3 +123,4 @@ create table feedback (
   Date date,
   time time
 );
+alter table sponsors modify mob_num varchar(10);

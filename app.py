@@ -218,6 +218,48 @@ def sponsorshipData():
     else:
         return('<h1 style="text-align:center">No entry exists</h1>')
 
+# This creates sponsors table 
+@app.route('/sponsors',methods=['GET','POST'])
+def sponsors():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT event_name FROM event_table")
+    eventnameTuple=cur.fetchall()
+    cur.close()
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT event_no FROM event_table")
+    eventnoTuple=cur.fetchall()
+    cur.close()
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT sponsor_type FROM sponsorship_package")
+    sponsorshipTuple=cur.fetchall()
+    cur.close()
+    
+    if request.method=='POST':
+        sponsorDetails=request.form
+        sponsors_name=sponsorDetails['sponsors_name']
+        address=sponsorDetails['address']
+        amount=sponsorDetails['amount']
+        mob_num=sponsorDetails['mob_num']
+        sponsor_type=sponsorDetails['sponsor_type']
+        event_no=sponsorDetails['event_no']
+        event_name=sponsorDetails['event_name']
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO sponsors(sponsors_name,address,amount,mob_num,sponsor_type,event_no,event_name) VALUES(%s,%s,%s,%s,%s,%s,%s)",(sponsors_name,address,int(amount),int(mob_num),sponsor_type,int(event_no),event_name))
+        mysql.connection.commit()
+        cur.close()
+        return redirect('/sponsorsData')
+    return render_template('sponsors.html',eventnameTuple=eventnameTuple,eventnoTuple=eventnoTuple,sponsorshipTuple=sponsorshipTuple)
+
+@app.route('/sponsorsData')
+def sponsorsData():
+    cur = mysql.connection.cursor()
+    resultValue = cur.execute(
+        "SELECT sponsors_name,address,amount,mob_num,sponsor_type,event_no,event_name from sponsors")
+    if resultValue > 0:
+        sponsorsDetails = cur.fetchall()
+        return render_template('sponsorsData.html', sponsorsDetails=sponsorsDetails)
+    else:
+        return('<h1 style="text-align:center">No entry exists</h1>')
 
 # This creates feedback table
 today_date = date.today().strftime('%Y-%m-%d')
