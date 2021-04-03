@@ -19,7 +19,7 @@ mysql=MySQL(app)
 # The very basic home page
 @app.route('/', methods=['GET','POST'])
 def index():
-    return ('This is the Home Page!')
+    return render_template('index.html')
 
 
 # Inserts data to login table
