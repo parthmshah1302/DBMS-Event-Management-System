@@ -5,9 +5,9 @@
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
     
   </a>
-  [![wakatime](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System.svg)](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System)
+  
 </p>
-
+[![wakatime](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System.svg)](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System)
 > Made using Flask and MySQL, a rigourous final submission project for DBMS
 
 ## Install
