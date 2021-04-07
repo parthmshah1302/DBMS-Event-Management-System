@@ -3,8 +3,9 @@
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/parthmshah1302/DBMS-Event-Management-System/blob/parth/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-    [![wakatime](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System.svg)](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System)
+    
   </a>
+  [![wakatime](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System.svg)](https://wakatime.com/badge/github/parthmshah1302/DBMS-Event-Management-System)
 </p>
 
 > Made using Flask and MySQL, a rigourous final submission project for DBMS
