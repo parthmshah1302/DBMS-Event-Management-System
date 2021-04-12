@@ -389,6 +389,26 @@ def registrationData():
         return render_template('accountData.html',accountDetails=accountDetails)
     else:
         return('<h1 style="text-align:center"> No entry exists</h1>')
+
+@app.route('/department',methods=['GET','POST'])
+def department():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT vendor_name from vendors")
+    vendorTuple = cur.fetchall()
+    mysql.connection.commit()
+    
+    if request.method == 'POST':
+        departmentDetails = request.form
+        department_name = departmentDetails['department_name']
+        vendor_relation = departmentDetails['vendor_relation']
+        work_scope = departmentDetails['work_scope']
+
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO department(department_name,vendor_relation,work_scope) VALUES(%s,%s,%s)", (department_name,vendor_relation,work_scope))
+        mysql.connection.commit()
+        cur.close()
+        return redirect('/')
+    return render_template('department.html', vendorTuple=vendorTuple)
       
 if __name__=='__main__':
     app.run(debug=True)   
