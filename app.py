@@ -50,6 +50,8 @@ def loginData():
     if resultValue > 0:
         userDetails = cur.fetchall()
         return render_template('loginData.html', userDetails=userDetails)
+    else:
+        return "Data does not exist, go to home page"
 
 # Inserts data to event_table
 
