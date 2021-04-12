@@ -407,8 +407,19 @@ def department():
         cur.execute("INSERT INTO department(department_name,vendor_relation,work_scope) VALUES(%s,%s,%s)", (department_name,vendor_relation,work_scope))
         mysql.connection.commit()
         cur.close()
-        return redirect('/')
+        return redirect('/departmentData')
     return render_template('department.html', vendorTuple=vendorTuple)
+
+@app.route('/departmentData')
+def departmentData():
+    cur=mysql.connection.cursor()
+    resultValue=cur.execute("SELECT department_name,vendor_relation,work_scope from department")
+    if resultValue>0:
+        departmentDetails=cur.fetchall()
+        return render_template('departmentData.html',departmentDetails=departmentDetails)
+    else:
+        return('<h1 style="text-align:center"> No entry exists</h1>')
+
       
 if __name__=='__main__':
     app.run(debug=True)   

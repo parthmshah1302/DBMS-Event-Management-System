@@ -1,0 +1,14 @@
+<table border="1">
+    <th>Department name</th>
+    <th>Vendor Details</th>
+    <th>Scope of Work</th>
+    
+    
+    {% for i in departmentDetails %}
+    <tr>
+        <td>{{i[0]}}</td>
+        <td>{{i[1]}}</td>
+        <td>{{i[2]}}</td>
+    </tr>
+    {%endfor%}
+</table>
