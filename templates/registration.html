@@ -27,7 +27,7 @@
             {%endfor%}</select>
         <br>
         <br>
-        Payment Mode <input type="number" name="payment_mode" id=""/>
+        Payment Mode <input type="text" name="payment_mode" id=""/>
         <br>
         <br>
         Serial Number <input type="number" name="sr_no" id=""/>
@@ -39,12 +39,12 @@
         Registration Reciept <input type="text" name="register_receipt" id=""/>
         <br>
         <br>
-        Event Name <input type="text" name="bill_date" id=""/>
+        Event Name <input type="text" name="event_name" id=""/>
         <br>
         <br>
         <!-- Event Number <input type="number" name="event_no" id=""/> -->
         Event Number <select name="event_no">
-            {% for event_no in event_table %}
+            {% for event_no in event_no_Tuple %}
             <option value="{{event_no[0]}}">{{event_no[0]}}</option>
             {%endfor%}</select>
         <br>
