@@ -8,7 +8,7 @@
 - [x] sponsorship_package
 - [x] sponsors
 - [x] vendors
-- [ ] department
+- [x] department
 - [ ] team
 - [x] feedback
 - [x] inventory
