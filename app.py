@@ -50,6 +50,8 @@ def loginData():
     if resultValue > 0:
         userDetails = cur.fetchall()
         return render_template('loginData.html', userDetails=userDetails)
+    else:
+        return "Data does not exist, go to home page"
 
 # Inserts data to event_table
 
@@ -387,6 +389,37 @@ def registrationData():
         return render_template('accountData.html',accountDetails=accountDetails)
     else:
         return('<h1 style="text-align:center"> No entry exists</h1>')
+
+@app.route('/department',methods=['GET','POST'])
+def department():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT vendor_name from vendors")
+    vendorTuple = cur.fetchall()
+    mysql.connection.commit()
+    
+    if request.method == 'POST':
+        departmentDetails = request.form
+        department_name = departmentDetails['department_name']
+        vendor_relation = departmentDetails['vendor_relation']
+        work_scope = departmentDetails['work_scope']
+
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO department(department_name,vendor_relation,work_scope) VALUES(%s,%s,%s)", (department_name,vendor_relation,work_scope))
+        mysql.connection.commit()
+        cur.close()
+        return redirect('/departmentData')
+    return render_template('department.html', vendorTuple=vendorTuple)
+
+@app.route('/departmentData')
+def departmentData():
+    cur=mysql.connection.cursor()
+    resultValue=cur.execute("SELECT department_name,vendor_relation,work_scope from department")
+    if resultValue>0:
+        departmentDetails=cur.fetchall()
+        return render_template('departmentData.html',departmentDetails=departmentDetails)
+    else:
+        return('<h1 style="text-align:center"> No entry exists</h1>')
+
       
 if __name__=='__main__':
     app.run(debug=True)   
