@@ -21,7 +21,7 @@ create table event_table(
   event_name varchar(50),
   event_date date,
   venue varchar(50),
-  event_time timestamp,
+  event_time time,
   event_type varchar(50),
   index (event_name)
 );
@@ -123,5 +123,36 @@ create table feedback (
   Date date,
   time time
 );
+insert into event_table values
+ (1,'Event1','05-05-21','Ahmedabad','12:00:00','A'),
+ (2,'Event2','05-05-21','Baroda','12:00:00','A'),
+ (3,'Event3','05-05-21','Ahmedabad','12:00:00','A'),
+ (4,'Event4','05-05-21','Baroda','12:00:00','A');
+-- TO DISPLAY MY EVENTS
+-- select event_name , email from registration where email=login.email; -- YOu MIGHT SHOW A REGISTERED AND TICK BESIDE 
 
+-- TO FILTER USING PROCEDURE
+drop procedure if exists filtervenue ;
+delimiter $$
+create procedure filtervenue()
+	begin
+		declare c_end int default 0;
+		declare r_cityname varchar(50);
+		declare c_event cursor for select venue from event_table;
+		declare continue handler for not found set c_end=1;
+        open c_event;
+        getvenuename: LOOP
+        fetch c_event into r_cityname;
+			if c_end=1 then
+				leave getvenuename;
+			end if;
+			select r_cityname as "VENUE:";
+            select event_name as "Event",date_format(event_date,"%M %d %Y") as "Date",event_time as "Time" from event_table
+            where venue=r_cityname;
+		end loop;
+		close c_event;
+	end$$
+delimiter ;
 
+-- create function event_count
+-- 
