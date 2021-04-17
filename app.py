@@ -6,7 +6,7 @@ import yaml
 import time
 from datetime import date, datetime
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='',static_folder='static')
 
 # Configure DB
 db = yaml.load(open('db.yaml'))
