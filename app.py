@@ -387,15 +387,22 @@ def registration():
         register_receipt=registrationdets['register_receipt']
         event_name=registrationdets['event_name']
         event_no=registrationdets['event_no']
+<<<<<<< HEAD
         cur=mysqlcon.connection.cursor()
         cur.execute("INSERT INTO registration(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no))
         mysqlcon.connection.commit()
+=======
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO registration(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no))
+        mysql.connection.commit()
+>>>>>>> a1474542b128ae6f5fcb2c473248e9a70a165924
         cur.close()
 
         return redirect('/registrationData')
     return render_template('registration.html',emailTuple=emailTuple,event_no_Tuple=event_no_Tuple)
 
 #This fucntion displays registration table
+#####
 
 @app.route('/registrationData')
 def registrationData():
