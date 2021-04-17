@@ -130,7 +130,6 @@ insert into event_table values
  (4,'Event4','05-05-21','Baroda','12:00:00','A');
 -- TO DISPLAY MY EVENTS
 -- select event_name , email from registration where email=login.email; -- YOu MIGHT SHOW A REGISTERED AND TICK BESIDE 
-
 -- TO FILTER USING PROCEDURE
 drop procedure if exists filtervenue ;
 delimiter $$
@@ -138,21 +137,72 @@ create procedure filtervenue()
 	begin
 		declare c_end int default 0;
 		declare r_cityname varchar(50);
+		declare count_event int;
 		declare c_event cursor for select venue from event_table;
 		declare continue handler for not found set c_end=1;
+
         open c_event;
         getvenuename: LOOP
         fetch c_event into r_cityname;
+      --  select event_count;
 			if c_end=1 then
 				leave getvenuename;
 			end if;
-			select r_cityname as "VENUE:";
+            select event_count(r_cityname) into count_event ;
+			select r_cityname as "VENUE:", count_event as "Total Events";
             select event_name as "Event",date_format(event_date,"%M %d %Y") as "Date",event_time as "Time" from event_table
             where venue=r_cityname;
 		end loop;
 		close c_event;
 	end$$
 delimiter ;
+-- select count(*) from event_table;
 
 -- create function event_count
--- 
+drop function if exists event_count ;
+delimiter $$
+ create function event_count(city_name varchar(20)) returns int deterministic
+	begin 
+		declare totnum int default 0;
+        select count(event_no) from event_table where event_table.venue=city_name into totnum;-- as "Upcoming Events";
+       -- call filtervenue();
+        return totnum;
+	end$$
+delimiter ;
+insert into login values ('m@g.com','123'),('b@g.com','123');
+-- Trigger for checking if the email id exists or not
+drop trigger if exists check_login;
+delimiter $$
+	create trigger check_login before insert on login for each row
+		begin
+        declare old_email varchar(50);
+        select email from login where email=new.email into old_email;
+		if old_email is not null then
+			signal sqlstate '66666'
+			set message_text="Lodu pachu kem nakhe che";
+        end if;
+	end $$
+delimiter ;	
+
+-- Trigger for checking if the email id exists or not
+drop trigger if exists check_loginup;
+delimiter $$
+	create trigger check_loginup before update on login for each row
+		begin
+        declare old_email varchar(50);
+        select email from login where email=new.email into old_email;
+		if old_email is not null then
+			signal sqlstate '66667'
+			set message_text="Already exists Dafod Chal chal biju lai";
+			end if;
+	end $$
+delimiter ;	
+
+-- TRIGGER TO ASK FOR FEEDBACK 
+drop trigger if exists bhar_feedback;
+delimiter $$
+	create trigger bhar_feedback before insert on login for each row
+		begin 
+			
+
+
