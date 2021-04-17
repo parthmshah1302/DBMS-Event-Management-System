@@ -42,6 +42,21 @@ def login():
 
 # This function displays the loginData
 
+@app.route('/update',methods=['POST','GET'])
+def update():
+    if request.method=='POST':
+        email = request.form['email']
+        password = request.form['password']
+        cur = mysql.connection.cursor()
+        cur.execute("""
+               UPDATE login
+               SET email=%s, password=%s
+            """, (email, password))
+        flash("Data Updated Successfully")
+        mysql.connection.commit()
+        return redirect(url_for('Index'))
+       
+
 
 @app.route('/loginData')
 def loginData():
@@ -423,3 +438,4 @@ def departmentData():
       
 if __name__=='__main__':
     app.run(debug=True)   
+

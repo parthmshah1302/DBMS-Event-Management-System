@@ -54,7 +54,7 @@ create table account_table(
 create table registration(
   fees double,
   customer_name varchar(50),
-  mob_name int,
+  mob_name varchar(50),
   email varchar(50),
   foreign key(email) references login(email),
   payment_mode varchar(50),
