@@ -6,7 +6,8 @@ import yaml
 import time
 from datetime import date, datetime
 from senti import *
-app = Flask(__name__)
+
+app = Flask(__name__,static_url_path='',static_folder='static')
 
 # Configure DB
 db = yaml.load(open('db.yaml'))
@@ -44,19 +45,19 @@ def login():
 
 # This function displays the loginData
 
-@app.route('/update',methods=['POST','GET'])
-def update():
-    if request.method=='POST':
-        email = request.form['email']
-        password = request.form['password']
-        cur = mysqlcon.connection.cursor()
-        cur.execute("""
-               UPDATE login
-               SET email=%s, password=%s
-            """, (email, password))
-        flash("Data Updated Successfully")
-        mysqlcon.connection.commit()
-        return redirect(url_for('Index'))
+# @app.route('/update',methods=['POST','GET'])
+# def update():
+#     if request.method=='POST':
+#         email = request.form['email']
+#         password = request.form['password']
+#         cur = mysqlcon.connection.cursor()
+#         cur.execute("""
+#                UPDATE login
+#                SET email=%s, password=%s
+#             """, (email, password))
+#         # flash("Data Updated Successfully")
+#         mysqlcon.connection.commit()
+#         return redirect(url_for('Index'))
        
 
 
