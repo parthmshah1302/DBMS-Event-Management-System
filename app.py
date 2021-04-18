@@ -5,6 +5,7 @@ from mysql.connector import MySQLConnection, Error
 import yaml
 import time
 from datetime import date, datetime
+from senti import *
 
 app = Flask(__name__,static_url_path='',static_folder='static')
 
@@ -44,19 +45,19 @@ def login():
 
 # This function displays the loginData
 
-@app.route('/update',methods=['POST','GET'])
-def update():
-    if request.method=='POST':
-        email = request.form['email']
-        password = request.form['password']
-        cur = mysqlcon.connection.cursor()
-        cur.execute("""
-               UPDATE login
-               SET email=%s, password=%s
-            """, (email, password))
-        flash("Data Updated Successfully")
-        mysqlcon.connection.commit()
-        return redirect(url_for('Index'))
+# @app.route('/update',methods=['POST','GET'])
+# def update():
+#     if request.method=='POST':
+#         email = request.form['email']
+#         password = request.form['password']
+#         cur = mysqlcon.connection.cursor()
+#         cur.execute("""
+#                UPDATE login
+#                SET email=%s, password=%s
+#             """, (email, password))
+#         # flash("Data Updated Successfully")
+#         mysqlcon.connection.commit()
+#         return redirect(url_for('Index'))
        
 
 
@@ -299,10 +300,10 @@ def feedback():
         now = datetime.now()
         now = now.strftime('%H:%M:%S')
         # print(now)
-
+        sentiment=Sentiment(message)
         cur = mysqlcon.connection.cursor()
-        cur.execute("INSERT INTO feedback(email,title,message,Date,time) VALUES(%s,%s,%s,%s,%s)",
-                    (email, title, message, today_date, now))
+        cur.execute("INSERT INTO feedback(email,title,message,Date,time,Sentiment) VALUES(%s,%s,%s,%s,%s,%s)",
+                    (email, title, message, today_date, now,sentiment))
         mysqlcon.connection.commit()
         cur.close()
 
@@ -316,7 +317,7 @@ def feedback():
 def feedbackData():
     cur = mysqlcon.connection.cursor()
     resultValue = cur.execute(
-        "SELECT email,title,message,Date,time from feedback")
+        "SELECT email,title,message,Date,time,Sentiment from feedback")
     if resultValue > 0:
         feedbackDetails = cur.fetchall()
         return render_template('feedbackData.html', feedbackDetails=feedbackDetails)
@@ -447,12 +448,12 @@ def departmentData():
 @app.route('/filtervenue')
 def filtven():
     try:
-        connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='admin',password='password')
+        connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='root',password='root')
         cursor = connection.cursor()
         cursor.callproc('filtervenue')
         for result in cursor.stored_results():
             print(result.fetchall())
-    except mysql.connector.Error as error:
+    except Error as error:
         print("Failed to execute stored procedure: {}".format(error))
     finally:
         if (connection.is_connected()):
