@@ -123,14 +123,41 @@ create table feedback (
   Date date,
   time time
 );
-insert into event_table values
- (1,'Event1','05-05-21','Ahmedabad','12:00:00','A'),
- (2,'Event2','05-05-21','Baroda','12:00:00','A'),
- (3,'Event3','05-05-21','Ahmedabad','12:00:00','A'),
- (4,'Event4','05-05-21','Baroda','12:00:00','A');
+alter table feedback modify message varchar(5000);
+alter table feedback add Sentiment varchar(50);
+ 
+ insert into login values ('m@g.com','123'),('b@g.com','123');
+ insert into login values ('parthmshah1302@gmail.com','123'),('malavdoshi312@gmail.com','123');
+
+insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (1, 'Kamba', '2020-07-10', 'Shebunino', '15:22:10', 'Stronghold');
+insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (2, 'Yodoo', '2021-01-24', 'Abilay', '3:17:11', 'Aerified');
+insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (3, 'Zoomcast', '2020-07-15', 'Isnos', '6:57:29', 'Temp');
+insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (4, 'Quaxo', '2020-08-07', 'Paratunka', '14:55:36', 'Latlux');
+insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (5, 'Midel', '2021-02-25', 'Morro do Chapéu', '22:25:36', 'Zaam-Dox');
+
+insert into registration values 
+(500,'Parth' ,'91932419f','parthmshah1302@gmail.com','Cash','A103','AU','g','Zoomcast',3),
+(500,'Pnot' ,'91542919','m@g.com','Cash','A104','AU','g','Quaxo',4),
+(500,'Malav' ,'91919439','malavdoshi312@gmail.com','Cheque','A106','AU','g','Zoomcast',3),
+(500,'Parth' ,'91932419','parthmshah1302@gmail.com','Cash','A105','AU','g','Yoodo',2),
+(500,'Pusrshotam' ,'919191919','b@g.com','Cash','A106','AU','g','Kamba',1),
+(500,'Malav' ,'91919439','malavdoshi312@gmail.com','Cheque','A102','AU','g','Yoodo',2);
+
+insert into sponsorship_package values ('GOLD' ,'sample');
+insert into sponsorship_package values ('PLATINIUM' ,'sample');
+insert into sponsorship_package values ('SILVER' ,'sample');
+insert into sponsors values ('Manikchand','Muh mai',10000,'9999999','GOLD',1,'Kamba'),
+							('RMD','Yeh bhi Muh mai',10000,'9999999','SILVER',2,'Yodoo'),
+							('Old monk','Liver mai',10000,'9999999','PLATINIUM',4,'Quaxo'),
+							('Parth Industires','Bhrigu lake',10000,'9999999','GOLD',1,'Kamba');
 -- TO DISPLAY MY EVENTS
 -- select event_name , email from registration where email=login.email; -- YOu MIGHT SHOW A REGISTERED AND TICK BESIDE 
 -- TO FILTER USING PROCEDURE
+
+
+
+-- PROCEDURE
+
 drop procedure if exists filtervenue ;
 delimiter $$
 create procedure filtervenue()
@@ -158,6 +185,78 @@ create procedure filtervenue()
 delimiter ;
 -- select count(*) from event_table;
 
+
+-- Procedure for extracting 
+drop procedure if exists registeredusers;
+delimiter $$
+create procedure registeredusers()
+	begin
+		declare c_end int default 0;
+		declare r_eventreg varchar(50);
+        declare count_var int;
+		declare c_registeredpeps cursor for select distinct event_name from registration order by event_name;
+		declare continue handler for not found set c_end=1;
+        open c_registeredpeps;
+        getmailinglist: loop
+			fetch c_registeredpeps into r_eventreg ;
+				if c_end=1 then
+					leave getmailinglist;
+				end if;
+               select distinct r_eventreg as "Event Name";
+					select email,customer_name from registration where registration.event_name=r_eventreg ;
+					-- select count(email), fees from registration where registration.event_name = r_eventreg into count_var;
+            end loop;
+		close c_registeredpeps;
+	end$$
+delimiter ;
+call registeredusers();
+
+-- Total collection on basis of event
+drop procedure if exists event_collection;
+delimiter $$;
+create procedure event_collection(event_fee int)
+begin 
+    declare amt double default 0.0;
+	declare reg_users int default 0;
+	
+    end loop;
+    return amount;
+end $$
+delimiter ;
+
+-- Procedure to Calculate 
+drop procedure if exists total_collection;
+delimiter $$
+create procedure total_collection(p_fees int,p_event_name varchar(20))
+begin
+	declare c_end int default 0;
+    declare r_eventname varchar(20);
+    declare r_count int;
+	declare ans int;
+	select count(r.customer_name) from registration r left join event_table e on e.event_no=r.event_no where e.event_name=p_event_name into r_count;
+	set ans=r_count*p_fees;
+    select r_event as "Event name";
+    select ans as "Total Collection";
+end $$
+delimiter ;
+call total_collection(500,'Zoomcast');
+
+
+-- CREATE PROCEDURE CONTACT US
+drop procedure if exists contact_us;
+delimiter $$;
+create procedure contact_us (dept_name varchar(20))
+begin 
+	select department_name,team_member_id,member_name, mob_num from team where department_name=dept_name;
+end$$
+delimiter ;
+		
+        
+        
+-- FUNCTION   
+
+
+
 -- create function event_count
 drop function if exists event_count ;
 delimiter $$
@@ -169,7 +268,47 @@ delimiter $$
         return totnum;
 	end$$
 delimiter ;
-insert into login values ('m@g.com','123'),('b@g.com','123');
+
+
+-- calculate total amt in trigger
+drop function if exists totalamt;
+delimiter $$
+create function totalamt(b_no int) returns double deterministic
+	begin
+		declare c_end int default 0;
+		declare r_totalamt varchar(50);
+        declare total_amount double default 0.0;
+        declare amt double default 0.0;
+        declare t1 double default 0.0;
+        declare del double default 0.0;
+		declare c_bills cursor for select amount from bill where bill.bill_no=b_no;
+		declare continue handler for not found set c_end=1;
+        open c_bills;
+        gettotamt: loop
+			fetch c_bills into r_totalamt ;
+				if c_end=1 then
+					leave gettotamt;
+				end if;
+			select amount from bill where bill.bill_no=b_no into amt  ;
+			select tax from bill where bill.bill_no=b_no into t1 ;
+			select del_charge from bill where bill.bill_no=b_no into del ;
+            set total_amount=amt+(amt*t1/100)+del;
+		end loop;
+        return total_amount;
+        end$$
+	delimiter ;
+    INSERT INTO `dbmseventmanagement`.`bill` (`bill_no`, `order_no`, `amount`, `tax`, `del_charge`, `bill_date`, `email`) VALUES ('1', '101', '200', '18', '33', '2021-04-13', 'malavdoshi312@gmail.com');
+    select totalamt("1") as "Ans";
+
+-- Function to return all the events of specific type
+drop function if exists search_eventtype ;
+delimiter $$
+ create function search_eventtype (eventtype varchar(20)) returns table (event_type)
+		
+
+-- TRIGGER
+
+
 -- Trigger for checking if the email id exists or not
 drop trigger if exists check_login;
 delimiter $$
@@ -198,6 +337,49 @@ delimiter $$
 	end $$
 delimiter ;	
 
+
+-- Trigger to check email while login
+drop trigger if exists validemail_i;
+delimiter $$
+	create trigger validemail_i before insert on login for each row
+    begin
+		if new.email not like '%@%' then
+			signal sqlstate value '91302'
+			set message_text = 'The email you entered is invalid';
+		elseif char_length(new.email) <5 then
+			signal sqlstate value '91605'
+			set message_text = 'The email you entered is invalid lenght';
+		end if;
+    end$$
+delimiter ;
+
+-- Trigger to check email while login -- TO DO: CHECK FIRST if email exists
+drop trigger if exists validemail_u;
+delimiter $$
+	create trigger validemail_u before update on login for each row
+    begin
+		if new.email not like '%@%' then
+			signal sqlstate value '93102'
+				set message_text = 'The email you updated is invalid';
+		elseif char_length(new.email) <5 then
+			signal sqlstate value '92001'
+			set message_text = 'The email you entered is invalid length';
+		end if;
+    end$$
+delimiter ;
+
+-- Trigger for event deleted from event table then delete it from regisration and sponsors
+drop trigger if exists event_delete;
+delimiter $$
+	create trigger event_delete before delete on event_table for each row
+		begin 
+			delete from registration where event_no=old.event_no;
+            delete from sponsors where event_no=old.event_no;
+		end $$
+	delimiter ;
+delete from event_table where event_name='Zoomcast';
+
+
 -- TRIGGER TO ASK FOR FEEDBACK 
 -- drop trigger if exists add_feedback;
 -- delimiter $$
@@ -205,45 +387,11 @@ delimiter ;
 -- 	begin
 -- 		insert into feedback values 
 
--- Procdeure for extracting 
-drop procedure if exists registeredusers;
-delimiter $$
-create procedure registeredusers()
-	begin
-		declare c_end int default 0;
-		declare r_eventreg varchar(50);
-		declare c_registeredpeps cursor for select distinct event_name from registration order by event_name;
-		declare continue handler for not found set c_end=1;
-        open c_registeredpeps;
-        getmailinglist: loop
-			fetch c_registeredpeps into r_eventreg ;
-				if c_end=1 then
-					leave getmailinglist;
-				end if;
-               select distinct r_eventreg as "Event Name"	INTO OUTFILE 'SQLFiles\event_name.csv'
-            FIELDS TERMINATED BY ','ENCLOSED BY '"'LINES TERMINATED BY '\n'
-;
-				select email,customer_name from registration where registration.event_name=r_eventreg ;
-			end loop;
-		close c_registeredpeps;
-	end$$
-delimiter ;
 
-insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (1, 'Kamba', '2020-07-10', 'Shebunino', '15:22:10', 'Stronghold');
-insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (2, 'Yodoo', '2021-01-24', 'Abilay', '3:17:11', 'Aerified');
-insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (3, 'Zoomcast', '2020-07-15', 'Isnos', '6:57:29', 'Temp');
-insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (4, 'Quaxo', '2020-08-07', 'Paratunka', '14:55:36', 'Latlux');
-insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (5, 'Midel', '2021-02-25', 'Morro do Chapéu', '22:25:36', 'Zaam-Dox');
 
-insert into registration values 
-(500,'Parth' ,'91932419f','parthmshah1302@gmail.com','Cash','A103','AU','g','Zoomcast',3),
-(500,'Pnot' ,'91542919','m@g.com','Cash','A104','AU','g','Quaxo',4),
-(500,'Malav' ,'91919439','malavdoshi312@gmail.com','Cheque','A106','AU','g','Zoomcast',3),
-(500,'Parth' ,'91932419','parthmshah1302@gmail.com','Cash','A105','AU','g','Yoodo',2),
-(500,'Pusrshotam' ,'919191919','b@g.com','Cash','A106','AU','g','Kamba',1),
-(500,'Malav' ,'91919439','malavdoshi312@gmail.com','Cheque','A102','AU','g','Yoodo',2);
 
-insert into login values ('parthmshah1302@gmail.com','123'),('malavdoshi312@gmail.com','123');
-		
+
+
+
 
 
