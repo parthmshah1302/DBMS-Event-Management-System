@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <button><a href="http://localhost:5000/">Go to Home</a></button>
     <br>
     <h1 style="text-align:center">Inventory Table<button><a href="http://localhost:5000/inventoryData">Current Dataset</a></button></h1>
@@ -29,5 +23,4 @@
         
         <input type="submit"/>
     </form>
-</body>
-</html>
+    {% endblock %}

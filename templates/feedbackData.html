@@ -1,9 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
 <table border="1">
     <th>Email ID</th>
     <th>Title</th>
     <th>Message</th>
     <th>Date</th>
     <th>Time</th>
+    <th>Sentiment</th>
     
     
     
@@ -14,7 +17,10 @@
         <td>{{feedback[2]}}</td>
         <td>{{feedback[3]}}</td>
         <td>{{feedback[4]}}</td>
+        <td>{{feedback[5]}}</td>
         
     </tr>
     {%endfor%}
 </table>
+
+{% endblock %}
