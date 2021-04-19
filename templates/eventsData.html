@@ -1,9 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
 <table border="1">
     <th>Event Number</th>
     <th>Event Name</th>
     <th>Event Date</th>
     <th>Event Location</th>
     <th>Event Time</th>
+    <th>Action</th>
     
     
     {% for event in eventDetails%}
@@ -13,6 +17,10 @@
         <td>{{event[2]}}</td>
         <td>{{event[3]}}</td>
         <td>{{event[4]}}</td>
+        <td>
+            <a href="/delete/eventsData/event_table/event_no/{{event[0]}}">Delete</a>
+        </td>
     </tr>
     {%endfor%}
 </table>
+{% endblock %}

@@ -1,7 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
 <table border="1">
     <th>Item Code</th>
     <th>Item Name</th>
     <th>Quantity</th>
+    <th>Actions</th>
     
     
     
@@ -11,7 +14,12 @@
         <td>{{inventory[0]}}</td>
         <td>{{inventory[1]}}</td>
         <td>{{inventory[2]}}</td>
+        <td>
+            <a href="/delete/inventoryData/inventory/item_code/{{inventory[0]}}">Delete</a>
+        </td>
         
     </tr>
     {%endfor%}
 </table>
+
+{% endblock %}

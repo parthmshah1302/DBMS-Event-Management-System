@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <table border="1">
     <th>Balance</th>
     <th>Miscellaneous Charges</th>
@@ -6,6 +9,7 @@
     <th>Bill Number</th>
     <th>Total Amount</th>
     <th>Paid Amount</th>
+    <th>Actions</th>
     
     
     
@@ -18,6 +22,10 @@
         <td>{{acc[4]}}</td>
         <td>{{acc[5]}}</td>
         <td>{{acc[6]}}</td>
+        <td>
+            <a href="/delete/accountData/account_table/receipt_name/{{acc[2]}}">Delete</a>
+        </td>
     </tr>
     {%endfor%}
 </table>
+{% endblock %}

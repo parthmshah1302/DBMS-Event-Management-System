@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <button><a href="http://localhost:5000/">Go to Home</a></button>
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        This is an alert box.
+      </div>
     <br>
     <h1 style="text-align:center">Login Table<button><a href="http://localhost:5000/loginData">Current Dataset</a></button></h1>
 
@@ -20,5 +18,5 @@
         <br>
         <input type="submit"/>
     </form>
-</body>
-</html>
+{% endblock %}
+

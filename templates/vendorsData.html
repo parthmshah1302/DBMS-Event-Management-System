@@ -1,9 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
 <table border="1">
     <th>Name</th>
     <th>Products</th>
     <th>Amount</th>
     <th>Invoice</th>
-    
+    <th>Actions</th>
     
     
     {% for vendor in vendorDetails%}
@@ -12,7 +15,10 @@
         <td>{{vendor[0]}}</td>
         <td>{{vendor[1]}}</td>
         <td>{{vendor[2]}}</td>
-        
+        <td>
+            <a href="/delete/vendorsData/vendors/vendor_name/{{vendor[3]}}">Delete</a>
+        </td>
     </tr>
     {%endfor%}
 </table>
+{% endblock %}

@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
-    td{
-        text-align: center;
-    }
-</style>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <table border="1">
         <th>Sponsor's Name</th>
         <th>Sponsor's Address</th>
@@ -20,6 +9,7 @@
         <th>Sponsor Type</th>
         <th>Event No</th>
         <th>Event Name</th>
+        <th>Actions</th>
         {% for sponsor in sponsorsDetails%}
         <tr>
             <td>{{sponsor[0]}}</td>
@@ -29,8 +19,10 @@
             <td>{{sponsor[4]}}</td>
             <td>{{sponsor[5]}}</td>
             <td>{{sponsor[6]}}</td>
+            <td>
+                <a href="/delete/sponsorsData/sponsors/{{sponsor[0]}}/{{sponsor[5]}}">Delete</a>
+            </td>
         </tr>
         {%endfor%}
     </table>
-</body>
-</html>
+    {% endblock %}
