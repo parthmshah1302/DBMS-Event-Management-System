@@ -414,7 +414,6 @@ def registration():
     return render_template('registration.html',emailTuple=emailTuple,event_no_Tuple=event_no_Tuple)
 
 #This fucntion displays registration table
-#####
 
 @app.route('/registrationData')
 def registrationData():
@@ -485,4 +484,3 @@ def filtven():
 
 if __name__=='__main__':
     app.run(debug=True)   
-

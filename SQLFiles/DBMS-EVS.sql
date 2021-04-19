@@ -129,6 +129,10 @@ alter table account_table add primary key(receipt_name);
 alter table sponsors drop primary key;
 alter table sponsors add primary key(sponsors_name,event_no);
 
+alter table feedback alter Sentiment set default 'neutral';
+alter table feedback add event_no int;
+alter table feedback add constraint foreign key(event_no) references event_table(event_no) ;
+ 
  insert into login values ('m@g.com','123'),('b@g.com','123');
  insert into login values ('parthmshah1302@gmail.com','123'),('malavdoshi312@gmail.com','123');
 
@@ -136,7 +140,7 @@ insert into event_table (event_no, event_name, event_date, venue, event_time, ev
 insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (2, 'Yodoo', '2021-01-24', 'Abilay', '3:17:11', 'Aerified');
 insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (3, 'Zoomcast', '2020-07-15', 'Isnos', '6:57:29', 'Temp');
 insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (4, 'Quaxo', '2020-08-07', 'Paratunka', '14:55:36', 'Latlux');
-insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (5, 'Midel', '2021-02-25', 'Morro do ChapÃ©u', '22:25:36', 'Zaam-Dox');
+insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (5, 'Midel', '2021-02-25', 'Morro do Chapéu', '22:25:36', 'Zaam-Dox');
 
 insert into registration values 
 (500,'Parth' ,'91932419f','parthmshah1302@gmail.com','Cash','A103','AU','g','Zoomcast',3),
@@ -153,7 +157,9 @@ insert into sponsors values ('Manikchand','Muh mai',10000,'9999999','GOLD',1,'Ka
 							('RMD','Yeh bhi Muh mai',10000,'9999999','SILVER',2,'Yodoo'),
 							('Old monk','Liver mai',10000,'9999999','PLATINIUM',4,'Quaxo'),
 							('Parth Industires','Bhrigu lake',10000,'9999999','GOLD',1,'Kamba');
--- TO DISPLAY MY EVENTS
+insert into feedback (email,title,message,Date,time,event_no) values ('malavdoshi312@gmail.com','feed','2324435dvdsvsdfgv','19-04-21','11:59:50',2);
+
+-- TO DISPLAY MY EVENTS [
 -- select event_name , email from registration where email=login.email; -- YOu MIGHT SHOW A REGISTERED AND TICK BESIDE 
 -- TO FILTER USING PROCEDURE
 
@@ -162,6 +168,7 @@ insert into sponsors values ('Manikchand','Muh mai',10000,'9999999','GOLD',1,'Ka
 -- PROCEDURE
 
 
+-- #1 TO filter acc to venue
 drop procedure if exists filtervenue ;
 delimiter $$
 create procedure filtervenue()
@@ -190,8 +197,8 @@ delimiter ;
 -- select count(*) from event_table;
 
 
--- Procdeure for extracting 
 
+-- #2 Procedure for extracting 
 drop procedure if exists registeredusers;
 delimiter $$
 create procedure registeredusers()
@@ -216,30 +223,91 @@ create procedure registeredusers()
 delimiter ;
 call registeredusers();
 
--- Total collection on basis of event
-drop procedure if exists event_collection;
-delimiter $$;
-create procedure event_collection(event_fee int)
-begin 
-    declare amt double default 0.0;
-	declare reg_users int default 0;
-	
-    end loop;
-    return amount;
 
+
+-- #3 Procedure to Calculate 
+drop procedure if exists total_collection;
+delimiter $$
+create procedure total_collection(p_fees int,p_event_name varchar(20))
+begin
+	declare c_end int default 0;
+    declare r_eventname varchar(20);
+    declare r_count int;
+	declare ans int;
+	select count(r.customer_name) from registration r left join event_table e on e.event_no=r.event_no where e.event_name=p_event_name into r_count;
+	set ans=r_count*p_fees;
+    select r_eventname as "Event name";
+    select ans as "Total Collection";
 end $$
+delimiter ;
+call total_collection(500,'Zoomcast');
+
+
+-- #4 CREATE PROCEDURE CONTACT US
+drop procedure if exists contact_us;
+delimiter $$
+create procedure contact_us (dept_name varchar(20))
+begin 
+	select department_name,team_member_id,member_name, mob_num, position from team where department_name=dept_name;
+end$$
+delimiter ;
+	
+    
+-- #5 Create a procedure to return reviews of the event and Keyword for it which displays the sentiment of the feedback in single word powered by IBM Watson 
+drop procedure if exists event_feedback;
+delimiter $$
+create procedure event_feedback()
+begin
+	declare c_end int default 0;
+    declare r_event_no varchar(50);
+    declare r_email varchar(50);
+    declare r_event_name varchar(50);
+    declare c_eventfeedback cursor for select distinct event_no,email from registration order by event_no;
+	declare continue handler for not found set c_end=1;
+    open c_eventfeedback;
+		getfeedback: loop
+			fetch c_eventfeedback into r_event_no,r_email ;
+				if c_end=1 then
+					leave getfeedback;
+				end if;
+			select event_name from event_table where event_no=r_event_no into r_event_name ;
+            -- select r.email, f.title, f.message, f.Date, f.time, f.sentiment from registration r right join on feedback f on f.email=r.email where e.event_name=r_event_name;
+			select distinct r_event_name as "Event Name",r.customer_name, f.title, f.message, f.Date, f.time, f.sentiment from  feedback f left join registration r on r.email=f.email where f.email=r_email and r_event_no=f.event_no;
+		end loop;
+	close c_eventfeedback;
+end$$
 delimiter ;
 
 
--- CREATE PROCEDURE CONTACT US
--- drop procedure if exists contact_us;
--- delimiter $$;
--- create procedure contact_us (dept_name varchar(20))
--- begin 
--- 	select 
-		
-        
-        
+-- #6 Procedure to display bill of a user --TO BE CHECKED
+drop procedure if exists customer_bill;
+delimiter $$
+create procedure customer_bill(p_email varchar(50),p_pass varchar(20))
+begin
+	declare c_end int default 0;
+    declare r_bill varchar(50);
+    declare r_email varchar(50);
+    declare c_bill cursor for select distinct email from bill;
+	declare continue handler for not found set c_end=1;
+    open c_bill;
+		getbill: loop
+			fetch c_bill into r_bill ;
+				if c_end=1 then
+					leave getbill;
+				end if;
+			select * from bill where email=r_bill and login.pass=p_pass;
+		end loop;
+	close c_bill;
+end$$
+delimiter ;
+
+
+
+-- Procdure to assign packages
+
+
+
+
 -- FUNCTION   
 
 
@@ -290,8 +358,8 @@ create function totalamt(b_no int) returns double deterministic
 -- Function to return all the events of specific type
 drop function if exists search_eventtype ;
 delimiter $$
- create function search_eventtype (eventtype varchar(20)) returns table (event_type)
-		
+create function search_eventtype (eventtype varchar(20)) returns table (event_type)
+
 
 -- TRIGGER
 
@@ -355,7 +423,10 @@ delimiter $$
     end$$
 delimiter ;
 
--- Trigger for event deleted from event table then delete it from regisration and sponsors
+-- DELETE TRIGERS:
+
+-- Trigger for event deleted from event table then delete it from regisration and sponsors:
+
 drop trigger if exists event_delete;
 delimiter $$
 	create trigger event_delete before delete on event_table for each row
@@ -364,12 +435,80 @@ delimiter $$
             delete from sponsors where event_no=old.event_no;
 		end $$
 	delimiter ;
-delete from event_table where event_name='Zoomcast';
+delete from event_table where event_name='Quaxo';
+
+-- Triggers to delete in Login Table
+
+drop trigger if exists login_delete;
+delimiter $$
+	create trigger login_delete before delete on login for each row
+		begin 
+			delete from registration where email=old.email;
+			delete from feedback where email=old.email;
+			delete from bill where email=old.email;
+		end $$
+	delimiter ;
+
+-- Trigger to delete in sponser_type 
+
+drop trigger if exists sponsor_package_delete;
+delimiter $$
+	create trigger sponsor_package_delete before delete on sponsor_type for each row
+		begin 
+			delete from sponsors where sponsor_type=old.sponsor_type;
+		end $$
+	delimiter ;
+
+-- Trigger to delete in department
+
+drop trigger if exists department_delete;
+delimiter $$
+	create trigger department_delete before delete on department for each row
+		begin 
+			delete from vendors where vendor_name=old.vendor_relation;
+            delete from team where department_name=old.department_name;
+		end $$
+	delimiter ;
+
+-- Trigger to update values in tables:
+
+-- Trigger for event deleted from event table then delete it from regisration and sponsors
+
+-- Trigger To Update 
+drop trigger if exists event_update;
+delimiter $$
+	create trigger event_update after update on event_table for each row
+		begin 
+			update registration set event_no=new.event_no where event_no=old.event_no;
+			update sponsors set event_no=new.event_no where event_no=old.event_no;
+			update feedback set event_no=new.event_no where event_no=old.event_no;
+		end $$
+delimiter ;
+update event_table set event_no=100 where event_no=1;
 
 
+
+drop trigger if exists event_delete;
+delimiter $$
+	create trigger event_del_feed before delete on event_table for each row
+		begin 
+			set flag=1;
+		end  $$
+	delimiter ;
+
+-- Trigger to assignnent 
 -- TRIGGER TO ASK FOR FEEDBACK 
 -- drop trigger if exists add_feedback;
 -- delimiter $$
 -- 	create trigger add_feedback after delete on event_table for each row
 -- 	begin
 -- 		insert into feedback values 
+
+
+
+
+
+
+
+
+
