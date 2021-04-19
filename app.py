@@ -113,7 +113,7 @@ def superDeleteTwo(table,deletecolumn1,deletecolumn2):
     cur.close()
     #flash('Deleted Successfully','success')
     return redirect('/sponsorsData')
-#
+
 @app.route('/delete/<string:categ>/<string:table>/<string:deletecolumn>/<string:main_id>', methods=['GET'])
 def superDelete(categ,table,deletecolumn,main_id):
     #if request.method=='GET':
