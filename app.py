@@ -89,7 +89,7 @@ def events():
         cur.execute("INSERT INTO event_table(event_name,event_date,venue,event_time,event_type) VALUES(%s,%s,%s,STR_TO_DATE(%s,'%%H:%%i'),%s)",(event_name,event_date,venue,event_time,event_type))
         mysqlcon.connection.commit()
         cur.close()
-        return('Entry is added!')
+        return redirect('/eventsData')
     return render_template('events.html')
 
 @app.route('/eventsData')
@@ -413,8 +413,7 @@ def registration():
         return redirect('/registrationData')
     return render_template('registration.html',emailTuple=emailTuple,event_no_Tuple=event_no_Tuple)
 
-#This fucntion displays registration table
-#####
+#This function displays registration table
 
 @app.route('/registrationData')
 def registrationData():
@@ -426,6 +425,38 @@ def registrationData():
     else:
         return('<h1 style="text-align:center"> No entry exists</h1>')
 
+@app.route('/team',methods=['GET','POST'])
+def team():
+    cur = mysqlcon.connection.cursor()
+    cur.execute("SELECT department_name from department")
+    departmentTuple = cur.fetchall()
+    mysqlcon.connection.commit()
+    
+    if request.method == 'POST':
+        teamDetails = request.form
+        member_name = teamDetails['member_name']
+        mob_num = teamDetails['mob_num']
+        department_name=teamDetails['department_name']
+        email = teamDetails['email']
+        team_member_id=teamDetails['team_member_id']
+        position=teamDetails['position']
+
+        cur = mysqlcon.connection.cursor()
+        cur.execute("INSERT INTO team(member_name,mob_num,department_name,email,team_member_id,position) VALUES(%s,%s,%s,%s,%s,%s)", (member_name,mob_num,department_name,email,team_member_id,position))
+        mysqlcon.connection.commit()
+        cur.close()
+        return redirect('/teamData')
+    return render_template('team.html', departmentTuple=departmentTuple)
+
+@app.route('/teamData')
+def teamData():
+    cur=mysqlcon.connection.cursor()
+    resultValue=cur.execute("SELECT member_name,mob_num,department_name,email,team_member_id,position FROM team")
+    if resultValue>0:
+        teamDetails=cur.fetchall()
+        return render_template('teamData.html',teamDetails=teamDetails)
+    else:
+        return('<h1 style="text-align:center"> No entry exists</h1>')
 
 @app.route('/department',methods=['GET','POST'])
 def department():
@@ -489,4 +520,3 @@ def filtven():
 
 if __name__=='__main__':
     app.run(debug=True)   
-

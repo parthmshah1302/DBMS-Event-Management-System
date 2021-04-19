@@ -109,6 +109,7 @@ create table team (
   position varchar(50),
   primary key(team_member_id)
 );
+alter table team modify mob_num varchar(10);
 create table inventory(
   item_code varchar (50),
   item_name varchar(50),
@@ -129,6 +130,7 @@ alter table account_table add primary key(receipt_name);
 alter table sponsors drop primary key;
 alter table sponsors add primary key(sponsors_name,event_no);
 
+ 
  insert into login values ('m@g.com','123'),('b@g.com','123');
  insert into login values ('parthmshah1302@gmail.com','123'),('malavdoshi312@gmail.com','123');
 
@@ -136,7 +138,7 @@ insert into event_table (event_no, event_name, event_date, venue, event_time, ev
 insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (2, 'Yodoo', '2021-01-24', 'Abilay', '3:17:11', 'Aerified');
 insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (3, 'Zoomcast', '2020-07-15', 'Isnos', '6:57:29', 'Temp');
 insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (4, 'Quaxo', '2020-08-07', 'Paratunka', '14:55:36', 'Latlux');
-insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (5, 'Midel', '2021-02-25', 'Morro do ChapÃ©u', '22:25:36', 'Zaam-Dox');
+insert into event_table (event_no, event_name, event_date, venue, event_time, event_type) values (5, 'Midel', '2021-02-25', 'Morro do Chapéu', '22:25:36', 'Zaam-Dox');
 
 insert into registration values 
 (500,'Parth' ,'91932419f','parthmshah1302@gmail.com','Cash','A103','AU','g','Zoomcast',3),
@@ -160,7 +162,6 @@ insert into sponsors values ('Manikchand','Muh mai',10000,'9999999','GOLD',1,'Ka
 
 
 -- PROCEDURE
-
 
 drop procedure if exists filtervenue ;
 delimiter $$
@@ -190,8 +191,7 @@ delimiter ;
 -- select count(*) from event_table;
 
 
--- Procdeure for extracting 
-
+-- Procedure for extracting 
 drop procedure if exists registeredusers;
 delimiter $$
 create procedure registeredusers()
@@ -226,17 +226,35 @@ begin
 	
     end loop;
     return amount;
-
 end $$
 delimiter ;
 
+-- Procedure to Calculate 
+drop procedure if exists total_collection;
+delimiter $$
+create procedure total_collection(p_fees int,p_event_name varchar(20))
+begin
+	declare c_end int default 0;
+    declare r_eventname varchar(20);
+    declare r_count int;
+	declare ans int;
+	select count(r.customer_name) from registration r left join event_table e on e.event_no=r.event_no where e.event_name=p_event_name into r_count;
+	set ans=r_count*p_fees;
+    select r_event as "Event name";
+    select ans as "Total Collection";
+end $$
+delimiter ;
+call total_collection(500,'Zoomcast');
+
 
 -- CREATE PROCEDURE CONTACT US
--- drop procedure if exists contact_us;
--- delimiter $$;
--- create procedure contact_us (dept_name varchar(20))
--- begin 
--- 	select 
+drop procedure if exists contact_us;
+delimiter $$;
+create procedure contact_us (dept_name varchar(20))
+begin 
+	select department_name,team_member_id,member_name, mob_num from team where department_name=dept_name;
+end$$
+delimiter ;
 		
         
         
@@ -373,3 +391,12 @@ delete from event_table where event_name='Zoomcast';
 -- 	create trigger add_feedback after delete on event_table for each row
 -- 	begin
 -- 		insert into feedback values 
+
+
+
+
+
+
+
+
+
