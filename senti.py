@@ -18,4 +18,4 @@ def Sentiment(text):
     a=json.loads(json_r)
     return(a['document_tone']['tones'][0]['tone_id'])
 
-print(Sentiment('fucking dumb'))
+print(Sentiment('this is a good comment'))
