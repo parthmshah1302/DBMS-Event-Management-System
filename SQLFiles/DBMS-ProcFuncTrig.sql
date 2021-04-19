@@ -288,7 +288,7 @@ delimiter $$
 
 drop trigger if exists sponsor_package_delete;
 delimiter $$
-	create trigger sponsor_package_delete before delete on sponsor_type for each row
+	create trigger sponsor_package_delete before delete on sponsorship_package for each row
 		begin 
 			delete from sponsors where sponsor_type=old.sponsor_type;
 		end $$
@@ -319,17 +319,17 @@ delimiter $$
 			update feedback set event_no=new.event_no where event_no=old.event_no;
 		end $$
 delimiter ;
-update event_table set event_no=100 where event_no=1;
+-- update event_table set event_no=100 where event_no=1;
 
 
 
-drop trigger if exists event_delete;
-delimiter $$
-	create trigger event_del_feed before delete on event_table for each row
-		begin 
-			set flag=1;
-		end  $$
-	delimiter ;
+-- drop trigger if exists event_delete;
+-- delimiter $$
+-- 	create trigger event_del_feed before delete on event_table for each row
+-- 		begin 
+-- 			set flag=1;
+-- 		end  $$
+-- 	delimiter ;
 
 -- Trigger to assignnent 
 -- TRIGGER TO ASK FOR FEEDBACK 

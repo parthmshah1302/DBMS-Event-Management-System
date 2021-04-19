@@ -10,7 +10,7 @@
 </p>
 
 
-## Install
+## Initialisation
 
 ```sh
 git clone https://github.com/parthmshah1302/DBMS-Event-Management-System
@@ -23,9 +23,14 @@ python -m virtualenv env
 pip install -r requirements.txt
 
 ```
+_Run the 3 SQL Files before moving on the next step_
+_Create a **db.yaml** file in your root directory_
+### db.yaml
 ```sh
-mysql -u root -p  
-run DBMS-EVS.SQL
+mysql_host: 'localhost'
+mysql_user: 'root'
+mysql_password: 'root'
+mysql_db: 'dbmsEventManagement'
 ```
 ```sh
 python app.py
@@ -40,7 +45,7 @@ python app.py
 ## Run tests
 
 ```sh
-navigate to http://localhost:5000/login and add entries
+navigate to http://localhost:5000/
 ```
 
 ## Author
