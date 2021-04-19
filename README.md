@@ -10,6 +10,8 @@
 </p>
 
 
+## Entity Relationship Diagram
+![ER Diagram](https://cdn.jsdelivr.net/gh/parthmshah1302/DBMS-Event-Management-System/ERD/DBMS-Event-Management%20-%20Entity%20Relationship%20Diagram.jpg)
 ## Initialisation
 
 ```sh
