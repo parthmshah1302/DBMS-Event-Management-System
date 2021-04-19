@@ -2,3 +2,4 @@ db.yaml
 .venv
 env
 poozan.py
+__pycache__
