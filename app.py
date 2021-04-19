@@ -58,8 +58,6 @@ def login():
 #         # flash("Data Updated Successfully")
 #         mysqlcon.connection.commit()
 #         return redirect(url_for('Index'))
-       
-
 
 @app.route('/loginData')
 def loginData():
@@ -105,8 +103,27 @@ def eventsData():
     else:
         return('<h1 style="text-align:center">No entry exists</h1>')
 
+@app.route('/delete/sponsorsData/<string:table>/<string:deletecolumn1>/<string:deletecolumn2>', methods=['GET'])
+def superDeleteTwo(table,deletecolumn1,deletecolumn2):
+    #if request.method=='GET':
+    #table_details=request.form
+    cur = mysqlcon.connection.cursor()
+    cur.execute("DELETE from %s where sponsors_name = '%s' and event_no = %s" %(table,deletecolumn1,deletecolumn2))
+    mysqlcon.connection.commit()
+    cur.close()
+    #flash('Deleted Successfully','success')
+    return redirect('/sponsorsData')
 
-# Inserts data to bill_table
+@app.route('/delete/<string:categ>/<string:table>/<string:deletecolumn>/<string:main_id>', methods=['GET'])
+def superDelete(categ,table,deletecolumn,main_id):
+    #if request.method=='GET':
+    #table_details=request.form
+    cur = mysqlcon.connection.cursor()
+    cur.execute("DELETE from %s where %s = '%s'" %(table,deletecolumn,main_id))
+    mysqlcon.connection.commit()
+    cur.close()
+    #flash('Deleted Successfully','success')
+    return redirect('/'+categ)
 
 
 @app.route('/bill', methods=['GET', 'POST'])
@@ -471,15 +488,19 @@ def departmentData():
     else:
         return('<h1 style="text-align:center"> No entry exists</h1>')
 
+#@app.route('/team',methods=['GET','POST'])
+#def team():
+
+      
 @app.route('/filtervenue')
 def filtven():
     try:
-        connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='root',password='root')
+        connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='admin',password='password')
         cursor = connection.cursor()
         cursor.callproc('filtervenue')
         for result in cursor.stored_results():
             print(result.fetchall())
-    except Error as error:
+    except mysql.connector.Error as error:
         print("Failed to execute stored procedure: {}".format(error))
     finally:
         if (connection.is_connected()):

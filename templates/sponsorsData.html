@@ -9,6 +9,7 @@
         <th>Sponsor Type</th>
         <th>Event No</th>
         <th>Event Name</th>
+        <th>Actions</th>
         {% for sponsor in sponsorsDetails%}
         <tr>
             <td>{{sponsor[0]}}</td>
@@ -18,6 +19,9 @@
             <td>{{sponsor[4]}}</td>
             <td>{{sponsor[5]}}</td>
             <td>{{sponsor[6]}}</td>
+            <td>
+                <a href="/delete/sponsorsData/sponsors/{{sponsor[0]}}/{{sponsor[5]}}">Delete</a>
+            </td>
         </tr>
         {%endfor%}
     </table>

@@ -126,6 +126,10 @@ create table feedback (
 );
 alter table feedback modify message varchar(5000);
 alter table feedback add Sentiment varchar(50);
+alter table account_table add primary key(receipt_name);
+alter table sponsors drop primary key;
+alter table sponsors add primary key(sponsors_name,event_no);
+
  
  insert into login values ('m@g.com','123'),('b@g.com','123');
  insert into login values ('parthmshah1302@gmail.com','123'),('malavdoshi312@gmail.com','123');

@@ -3,13 +3,16 @@
 <table border="1" class="table table-hover table-bordered">
     <th>Sponsorship Package</th>
     <th>Deliverables</th>
-    
+    <th>Actions</th>
     
     
     {% for sponsorship in sponsorshipDetails%}
     <tr>
         <td>{{sponsorship[0]}}</td>
         <td>{{sponsorship[1]}}</td>
+        <td>
+            <a href="/delete/sponsorshipData/sponsorship_package/sponsor_type/{{sponsorship[0]}}">Delete</a>
+        </td>
     </tr>
     {%endfor%}
 </table>
