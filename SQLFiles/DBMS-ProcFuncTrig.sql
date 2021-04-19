@@ -1,6 +1,4 @@
 use dbmsEventManagement;
-
--- Solved sponsortype
 -- PROCEDURE
 
 
@@ -38,24 +36,24 @@ delimiter ;
 drop procedure if exists registeredusers;
 delimiter $$
 create procedure registeredusers()
-	begin
-		declare c_end int default 0;
-		declare r_eventreg varchar(50);
+    begin
+        declare c_end int default 0;
+        declare r_eventreg varchar(50);
         declare count_var int;
-		declare c_registeredpeps cursor for select distinct event_name from registration order by event_name;
-		declare continue handler for not found set c_end=1;
+        declare c_registeredpeps cursor for select distinct event_name from registration order by event_name;
+        declare continue handler for not found set c_end=1;
         open c_registeredpeps;
         getmailinglist: loop
-			fetch c_registeredpeps into r_eventreg ;
-				if c_end=1 then
-					leave getmailinglist;
-				end if;
+            fetch c_registeredpeps into r_eventreg ;
+                if c_end=1 then
+                    leave getmailinglist;
+                end if;
                select distinct r_eventreg as "Event Name";
-					select email,customer_name from registration where registration.event_name=r_eventreg ;
-					-- select count(email), fees from registration where registration.event_name = r_eventreg into count_var;
+                    select email,customer_name from registration where registration.event_name=r_eventreg ;
+                    -- select count(email), fees from registration where registration.event_name = r_eventreg into count_var;
             end loop;
-		close c_registeredpeps;
-	end$$
+        close c_registeredpeps;
+    end$$
 delimiter ;
 call registeredusers();
 
@@ -138,15 +136,33 @@ end$$
 delimiter ;
 
 
+-- #7 Procedure for extracting 
 
--- Procdure to assign packages
-
-
+drop procedure if exists sponsor_event;
+delimiter $$
+create procedure sponsor_event()
+    begin
+        declare c_end int default 0;
+        declare r_eventsp varchar(50);
+        declare count_var int;
+        declare c_sponsor cursor for select distinct event_no from event_table order by event_name;
+        declare continue handler for not found set c_end=1;
+        open c_sponsor;
+        getsp: loop
+            fetch c_sponsor into r_eventsp ;
+                if c_end=1 then
+                    leave getsp;
+                end if;
+                    select e.event_name from event_table e where e.event_no = r_eventsp;
+                    select s.sponsors_name from event_table e left join sponsors s on e.event_no=s.event_no where e.event_no=r_eventsp ;
+            end loop;
+        close c_sponsor;
+    end$$
+delimiter ;
+call sponsor_event();
 
 
 -- FUNCTION   
-
-
 
 -- create function event_count
 drop function if exists event_count ;
@@ -159,7 +175,6 @@ delimiter $$
         return totnum;
 	end$$
 delimiter ;
-
 
 -- calculate total amt in trigger
 drop function if exists totalamt;
@@ -191,16 +206,20 @@ create function totalamt(b_no int) returns double deterministic
     INSERT INTO `dbmseventmanagement`.`bill` (`bill_no`, `order_no`, `amount`, `tax`, `del_charge`, `bill_date`, `email`) VALUES ('1', '101', '200', '18', '33', '2021-04-13', 'malavdoshi312@gmail.com');
     select totalamt("1") as "Ans";
 
--- Function to return all the events of specific type
-drop function if exists search_eventtype ;
+-- Search function to calculate total sponsors of searched event
+drop function if exists event_spcount ;
 delimiter $$
-create function search_eventtype (eventtype varchar(20)) returns table (event_type)
-
+ create function event_spcount(r_event_name varchar(20)) returns int deterministic
+    begin 
+        declare totnum int default 0;
+        select count(sponsors_name) from sponsors s left join event_table e on e.event_no=s.event_no where e.event_name=r_event_name into totnum;
+        return totnum;
+    end$$
+delimiter ;
 
 -- TRIGGER
 
-
--- Trigger for checking if the email id exists or not before insert
+-- Trigger for checking if the email id exists or not
 drop trigger if exists check_login;
 delimiter $$
 	create trigger check_login before insert on login for each row
@@ -209,12 +228,12 @@ delimiter $$
         select email from login where email=new.email into old_email;
 		if old_email is not null then
 			signal sqlstate '66666'
-			set message_text="You have alreadu added this email!";
+			set message_text="Lodu pachu kem nakhe che";
         end if;
 	end $$
 delimiter ;	
 
--- Trigger for checking if the email id exists or not before update
+-- Trigger for checking if the email id exists or not
 drop trigger if exists check_loginup;
 delimiter $$
 	create trigger check_loginup before update on login for each row
@@ -223,11 +242,10 @@ delimiter $$
         select email from login where email=new.email into old_email;
 		if old_email is not null then
 			signal sqlstate '66667'
-			set message_text="This email is already registered in the Database!";
+			set message_text="Already exists Dafod Chal chal biju lai";
 			end if;
 	end $$
 delimiter ;	
-
 
 -- Trigger to check email while login
 drop trigger if exists validemail_i;
@@ -239,7 +257,7 @@ delimiter $$
 			set message_text = 'The email you entered is invalid';
 		elseif char_length(new.email) <5 then
 			signal sqlstate value '91605'
-			set message_text = 'The email you entered is invalid length';
+			set message_text = 'The email you entered is invalid lenght';
 		end if;
     end$$
 delimiter ;
@@ -259,7 +277,7 @@ delimiter $$
     end$$
 delimiter ;
 
--- DELETE TRIGERS:
+-- DELETE TRIGGERS:
 
 -- Trigger for event deleted from event table then delete it from regisration and sponsors:
 
@@ -324,13 +342,7 @@ delimiter ;
 
 
 
--- drop trigger if exists event_delete;
--- delimiter $$
--- 	create trigger event_del_feed before delete on event_table for each row
--- 		begin 
--- 			set flag=1;
--- 		end  $$
--- 	delimiter ;
+
 
 -- Trigger to assignnent 
 -- TRIGGER TO ASK FOR FEEDBACK 

@@ -420,8 +420,8 @@ def registrationData():
     cur=mysqlcon.connection.cursor()
     resultValue=cur.execute("SELECT fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no from registration")
     if resultValue>0:
-        accountDetails=cur.fetchall()
-        return render_template('accountData.html',accountDetails=accountDetails)
+        registrationDetails=cur.fetchall()
+        return render_template('registrationData.html',registrationDetails=registrationDetails)
     else:
         return('<h1 style="text-align:center"> No entry exists</h1>')
 
