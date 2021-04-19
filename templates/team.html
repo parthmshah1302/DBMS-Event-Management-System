@@ -1,5 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
-
+<button><a href="/">Go to Home</a></button>
+<br>
+<h1 style="text-align:center">Team Table <button><a href="/teamData">Current Dataset</a></button></h1>
+   
+    <form action="" method="POST">
+        <!-- Sr No <input type="number" name="event_no"/>
+        <br>
+        <br> -->
+        Member Name <input type="text" name="member_name"/>
+        <br>
+        <br>
+        Mobile Number <input type="number" name="mob_num" id=""/>
+        <br>
+        <br>
+        Email <input type="email" name="email" id=""/>
+        <br>
+        <br>
+        Department Name <select name="department_name">
+            {% for department_name in departmentTuple %}
+            <option value="{{department_name[0]}}">{{department_name[0]}}</option>
+            {%endfor%}</select>
+        <br>
+        <br>
+        Position <input type="text" name="position" id=""/>
+        <br>
+        <br>
+        Team Member ID <input type="number" name="team_member_id" id=""/>
+        <br>
+        <br>
+        
+        
+        <input type="submit"/>
+    </form>
 
 {% endblock %}

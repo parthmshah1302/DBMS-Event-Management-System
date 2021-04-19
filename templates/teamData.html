@@ -1,5 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-
+<table border="1" class="table table-hover table-bordered">
+    <th>Member Name</th>
+    <th>Department Name</th>
+    <th>Mobile number</th>
+    <th>Email Address</th>
+    <th>Position</th>
+    <th>Member ID</th>
+    
+    
+    
+    {% for team in teamDetails%}
+    <tr>
+        <td>{{team[0]}}</td>
+        <td>{{team[1]}}</td>
+        <td>{{team[2]}}</td>
+        <td>{{team[3]}}</td>
+        
+        <td>{{team[5]}}</td>
+        <td>{{team[4]}}</td>
+        
+    </tr>
+    {%endfor%}
+</table>
 
 {% endblock %}

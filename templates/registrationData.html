@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-<table border="1">
+<table border="1" class="table table-hover table-bordered">
     <th>Fees</th>
     <th>Customer Name</th>
     <th>Mobile number</th>
-    <th>Email Address(%)</th>
+    <th>Email Address</th>
     <th>Payment Mode</th>
     <th>Serial Number</th>
     <th>Serial Number</th>
     <th>Registration Reciept</th>
     <th>Event Name</th>
-    <th>Event Numbe</th>
+    <th>Event Number</th>
     
     
     
-    {% for ev in registrationdets%}
+    {% for ev in registrationDetails%}
     <tr>
         <td>{{ev[0]}}</td>
         <td>{{ev[1]}}</td>
@@ -26,7 +26,6 @@
         <td>{{ev[7]}}</td>
         <td>{{ev[8]}}</td>
         <td>{{ev[9]}}</td>
-        <!-- <td>{{bill[7]}}</td> -->
     </tr>
     {%endfor%}
 </table>

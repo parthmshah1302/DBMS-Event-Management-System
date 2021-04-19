@@ -3,6 +3,4 @@ db.yaml
 env
 poozan.py
 __pycache__
-customer_dets.csv
-event_name.csv
-senti.cpython-39.pyc
+

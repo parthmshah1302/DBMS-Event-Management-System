@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends "base.html" %}
+
+{% block content %}
+
 <style>
     .done{
         color:green;
@@ -40,9 +36,8 @@
     <h2><div class="rem"><a href="/team">Team</a></div></h2>
     <h2><div class="done"><a href="/inventory">Inventory</a></div></h2>
     <h2><div class="done"><a href="/feedback">Feedback</a></div></h2>
+    </form>
+    <br><br><br><br><br><br>
     <footer><a href="https://github.com/parthmshah1302/DBMS-Event-Management-System" target="_blank">Github Repository</a>
     </footer>
-    
-    </form>
-</body>
-</html>
+{% endblock %}
