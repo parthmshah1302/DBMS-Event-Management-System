@@ -58,8 +58,6 @@ def login():
 #         # flash("Data Updated Successfully")
 #         mysqlcon.connection.commit()
 #         return redirect(url_for('Index'))
-       
-
 
 @app.route('/loginData')
 def loginData():
@@ -105,8 +103,27 @@ def eventsData():
     else:
         return('<h1 style="text-align:center">No entry exists</h1>')
 
+@app.route('/delete/sponsorsData/<string:table>/<string:deletecolumn1>/<string:deletecolumn2>', methods=['GET'])
+def superDeleteTwo(table,deletecolumn1,deletecolumn2):
+    #if request.method=='GET':
+    #table_details=request.form
+    cur = mysqlcon.connection.cursor()
+    cur.execute("DELETE from %s where sponsors_name = '%s' and event_no = %s" %(table,deletecolumn1,deletecolumn2))
+    mysqlcon.connection.commit()
+    cur.close()
+    #flash('Deleted Successfully','success')
+    return redirect('/sponsorsData')
 
-# Inserts data to bill_table
+@app.route('/delete/<string:categ>/<string:table>/<string:deletecolumn>/<string:main_id>', methods=['GET'])
+def superDelete(categ,table,deletecolumn,main_id):
+    #if request.method=='GET':
+    #table_details=request.form
+    cur = mysqlcon.connection.cursor()
+    cur.execute("DELETE from %s where %s = '%s'" %(table,deletecolumn,main_id))
+    mysqlcon.connection.commit()
+    cur.close()
+    #flash('Deleted Successfully','success')
+    return redirect('/'+categ)
 
 
 @app.route('/bill', methods=['GET', 'POST'])
@@ -388,15 +405,9 @@ def registration():
         register_receipt=registrationdets['register_receipt']
         event_name=registrationdets['event_name']
         event_no=registrationdets['event_no']
-<<<<<<< HEAD
         cur=mysqlcon.connection.cursor()
         cur.execute("INSERT INTO registration(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no))
         mysqlcon.connection.commit()
-=======
-        cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO registration(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(fees,customer_name, mob_name, email, payment_mode, sr_no, college_name, register_receipt, event_name,event_no))
-        mysql.connection.commit()
->>>>>>> a1474542b128ae6f5fcb2c473248e9a70a165924
         cur.close()
 
         return redirect('/registrationData')
@@ -414,6 +425,7 @@ def registrationData():
         return render_template('accountData.html',accountDetails=accountDetails)
     else:
         return('<h1 style="text-align:center"> No entry exists</h1>')
+
 
 @app.route('/department',methods=['GET','POST'])
 def department():
@@ -448,12 +460,12 @@ def departmentData():
 @app.route('/filtervenue')
 def filtven():
     try:
-        connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='root',password='root')
+        connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='admin',password='password')
         cursor = connection.cursor()
         cursor.callproc('filtervenue')
         for result in cursor.stored_results():
             print(result.fetchall())
-    except Error as error:
+    except mysql.connector.Error as error:
         print("Failed to execute stored procedure: {}".format(error))
     finally:
         if (connection.is_connected()):
