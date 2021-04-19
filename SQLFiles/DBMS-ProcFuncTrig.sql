@@ -228,7 +228,7 @@ delimiter $$
         select email from login where email=new.email into old_email;
 		if old_email is not null then
 			signal sqlstate '66666'
-			set message_text="Lodu pachu kem nakhe che";
+			set message_text="Email is invalid/duplicate. Please try again!";
         end if;
 	end $$
 delimiter ;	
@@ -242,7 +242,7 @@ delimiter $$
         select email from login where email=new.email into old_email;
 		if old_email is not null then
 			signal sqlstate '66667'
-			set message_text="Already exists Dafod Chal chal biju lai";
+			set message_text="Email is invalid/duplicate. Please try again!";
 			end if;
 	end $$
 delimiter ;	

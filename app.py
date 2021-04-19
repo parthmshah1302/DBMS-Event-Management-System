@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask_mysqldb import MySQL
 import mysql.connector
 from mysql.connector import MySQLConnection, Error
@@ -8,6 +8,7 @@ from datetime import date, datetime
 from senti import *
 
 app = Flask(__name__,static_url_path='',static_folder='static')
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # Configure DB
 db = yaml.load(open('db.yaml'))
@@ -30,19 +31,21 @@ def index():
 # Inserts data to login table
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        userDetails = request.form
-        email = userDetails['email']
-        password = userDetails['password']
+    try:    
+        if request.method == 'POST':
+            userDetails = request.form
+            email = userDetails['email']
+            password = userDetails['password']
 
-        cur = mysqlcon.connection.cursor()
-        cur.execute("INSERT INTO login(email, pass) VALUES(%s, %s)",
-                    (email, password))
-        mysqlcon.connection.commit()
-        cur.close()
-        return redirect('/loginData')
-    return render_template('login.html')
-
+            cur = mysqlcon.connection.cursor()
+            cur.execute("INSERT INTO login(email, pass) VALUES(%s, %s)",
+                        (email, password))
+            mysqlcon.connection.commit()
+            cur.close()
+            return redirect('/loginData')
+        return render_template('login.html')
+    except:
+        return('<h1 style="text-align:center">Email is invalid/duplicate. Please try again!</h1?')
 # This function displays the loginData
 
 # @app.route('/update',methods=['POST','GET'])
