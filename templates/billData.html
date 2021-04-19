@@ -10,7 +10,7 @@
     <th>Final Amount</th>
     <th>Bill Date</th>
     <th>Email</th>
-    
+    <th>Actions</th>
     
     
     {% for bill in billDetails%}
@@ -23,6 +23,9 @@
         <td>{{bill[5]}}</td>
         <td>{{bill[6]}}</td>
         <td>{{bill[7]}}</td>
+        <td>
+            <a href="/delete/billData/bill/bill_no/{{bill[0]}}">Delete</a>
+        </td>
     </tr>
     {%endfor%}
 </table>
