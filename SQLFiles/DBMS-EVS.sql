@@ -109,6 +109,7 @@ create table team (
   position varchar(50),
   primary key(team_member_id)
 );
+alter table team modify mob_num varchar(10);
 create table inventory(
   item_code varchar (50),
   item_name varchar(50),
