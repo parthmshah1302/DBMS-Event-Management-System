@@ -46,22 +46,7 @@ def login():
         return render_template('login.html')
     except:
         return('<h1 style="text-align:center">Email is invalid/duplicate. Please try again!</h1?')
-# This function displays the loginData
-
-# @app.route('/update',methods=['POST','GET'])
-# def update():
-#     if request.method=='POST':
-#         email = request.form['email']
-#         password = request.form['password']
-#         cur = mysqlcon.connection.cursor()
-#         cur.execute("""
-#                UPDATE login
-#                SET email=%s, password=%s
-#             """, (email, password))
-#         # flash("Data Updated Successfully")
-#         mysqlcon.connection.commit()
-#         return redirect(url_for('Index'))
-
+        
 @app.route('/loginData')
 def loginData():
     cur = mysqlcon.connection.cursor()

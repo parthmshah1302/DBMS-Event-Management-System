@@ -130,3 +130,4 @@ alter table feedback add Sentiment varchar(50);
 alter table account_table add primary key(receipt_name);
 alter table sponsors drop primary key;
 alter table sponsors add primary key(sponsors_name,event_no);
+alter table sponsors modify mob_num varchar(10);

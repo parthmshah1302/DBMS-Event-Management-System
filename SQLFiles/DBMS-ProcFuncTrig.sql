@@ -154,7 +154,8 @@ create procedure sponsor_event()
                     leave getsp;
                 end if;
                     select e.event_name from event_table e where e.event_no = r_eventsp;
-                    select s.sponsors_name from event_table e left join sponsors s on e.event_no=s.event_no where e.event_no=r_eventsp ;
+                    select s.sponsors_name from event_table e left join sponsors s on e.event_no=s.event_no
+					where e.event_no=r_eventsp ;
             end loop;
         close c_sponsor;
     end$$
@@ -212,7 +213,8 @@ delimiter $$
  create function event_spcount(r_event_name varchar(20)) returns int deterministic
     begin 
         declare totnum int default 0;
-        select count(sponsors_name) from sponsors s left join event_table e on e.event_no=s.event_no where e.event_name=r_event_name into totnum;
+        select count(sponsors_name) from sponsors s left join event_table e on e.event_no=s.event_no 
+		where e.event_name=r_event_name into totnum;
         return totnum;
     end$$
 delimiter ;
@@ -279,7 +281,7 @@ delimiter ;
 
 -- DELETE TRIGGERS:
 
--- Trigger for event deleted from event table then delete it from regisration and sponsors:
+-- Trigger for event deleted from event table then delete it from registration and sponsors:
 
 drop trigger if exists event_delete;
 delimiter $$
@@ -303,7 +305,7 @@ delimiter $$
 		end $$
 	delimiter ;
 
--- Trigger to delete in sponser_type 
+-- Trigger to delete in sponsor_type 
 
 drop trigger if exists sponsor_package_delete;
 delimiter $$
@@ -339,7 +341,16 @@ delimiter $$
 		end $$
 delimiter ;
 -- update event_table set event_no=100 where event_no=1;
-
+-- 7
+drop trigger if exists login_update;
+delimiter $$
+    create trigger login_update after update on login for each row
+        begin 
+            update registration set email=new.email where email=old.email;
+            update feedback set email=new.email where email=old.email;
+            update bill set email=new.email where email=old.email;
+        end $$
+delimiter ;
 
 
 
