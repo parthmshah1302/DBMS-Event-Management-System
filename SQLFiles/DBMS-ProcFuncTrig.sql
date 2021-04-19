@@ -1,5 +1,6 @@
 use dbmsEventManagement;
 
+-- Solved sponsortype
 -- PROCEDURE
 
 
