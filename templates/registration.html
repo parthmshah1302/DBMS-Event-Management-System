@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 style="text-align:center">Registration Table</h1>
+<button><a href="/">Go to Home</a></button>
+<br>
+<h1 style="text-align:center">Registration Table <button><a href="/registrationData">Current Dataset</a></button></h1>
     <form action="" method="POST">
         <!-- Sr No <input type="number" name="event_no"/>
         <br>
@@ -35,7 +37,7 @@
         <br>
         Event Name <input type="text" name="event_name" id=""/>
         <br>
-        <br>
+        <br>-
         <!-- Event Number <input type="number" name="event_no" id=""/> -->
         Event Number <select name="event_no">
             {% for event_no in event_no_Tuple %}
