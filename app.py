@@ -480,7 +480,7 @@ def departmentData():
 #def team():
 
       
-@app.route('/filtervenue')
+@app.route('/realfiltervenue')
 def filtven():
     try:
         connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='admin',password='password')
@@ -505,6 +505,39 @@ def filtven():
     #     venuelist.append(i)
     #     print("=====",venuelist)
     # return('venuelist')
+
+### Code for HTML Procedures
+@app.route('/procedures')
+def procedures():
+    return render_template("procedures/procedures.html")
+
+@app.route('/calctotalfromevent')
+def calctotalfromevent():
+    return render_template("procedures/calctotalfromevent.html")
+
+@app.route('/contactus')
+def contactUs():
+    return render_template("procedures/contactus.html")
+
+@app.route('/eventfeedback')
+def procedureEventFeedback():
+    return render_template("procedures/eventfeedback.html")
+
+@app.route('/eventsponsors')
+def proceduresEventSponsors():
+    return render_template("procedures/eventsponsors.html")
+
+@app.route('/extractedusers')
+def proceudureExtractedUsers():
+    return render_template("procedures/extractedusers.html")
+
+@app.route('/filtervenue')
+def filtervenue():
+    return render_template("procedures/filtervenue.html")
+
+@app.route('/userbill')
+def userbill():
+    return render_template("procedures/userbill.html")
 
 if __name__=='__main__':
     app.run(debug=True)   
