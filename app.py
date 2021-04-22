@@ -507,27 +507,27 @@ def filtven():
     # return('venuelist')
 
 ### Code for HTML Procedures
-@app.route('/procedures')
+@app.route('/procedures', methods=['GET','POST'])
 def procedures():
     return render_template("procedures/procedures.html")
 
-@app.route('/calctotalfromevent')
+@app.route('/calctotalfromevent', methods=['GET','POST'])
 def calctotalfromevent():
     return render_template("procedures/calctotalfromevent.html")
 
-@app.route('/contactus')
+@app.route('/contactus', methods=['GET','POST'])
 def contactUs():
     return render_template("procedures/contactus.html")
 
-@app.route('/eventfeedback')
+@app.route('/eventfeedback', methods=['GET','POST'])
 def procedureEventFeedback():
     return render_template("procedures/eventfeedback.html")
 
-@app.route('/eventsponsors')
+@app.route('/eventsponsors', methods=['GET','POST'])
 def proceduresEventSponsors():
     return render_template("procedures/eventsponsors.html")
 
-@app.route('/extractedusers')
+@app.route('/extractedusers', methods=['GET','POST'])
 def proceudureExtractedUsers():
     return render_template("procedures/extractedusers.html")
 
@@ -535,7 +535,7 @@ def proceudureExtractedUsers():
 def filtervenue():
     return render_template("procedures/filtervenue.html")
 
-@app.route('/userbill')
+@app.route('/userbill', methods=['GET','POST'])
 def userbill():
     return render_template("procedures/userbill.html")
 
