@@ -1,5 +1,21 @@
 {% extends "procedures/procedurebase.html" %}
 
 {% block content %}
-
+<form method="POST" name="calctotal">
+    <label for="EVENT">Choose the Event:</label>
+    <select name="Department" id="event">
+      <option value="Fin">Event-1</option>
+      <option value="Event-2">Event-2</option>
+      <option value="Intro to GitHub">GitHub</option>   
+      <option value="Event-7">Event-7</option>
+    </select>
+    <br>
+    <label for="Fees">Enter Registration Fees</label>
+    <input type="text" id="Fees" name="Fees">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+<br>
+<br>
+<h1>Total Income from Event is:</h1> <h2>5000</h2>
 {% endblock %}
