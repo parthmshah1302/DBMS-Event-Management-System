@@ -531,7 +531,7 @@ def proceduresEventSponsors():
 def proceudureExtractedUsers():
     return render_template("procedures/extractedusers.html")
 
-@app.route('/filtervenue')
+@app.route('/filtervenue', methods=['GET','POST'])
 def filtervenue():
     return render_template("procedures/filtervenue.html")
 

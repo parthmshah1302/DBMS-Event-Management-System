@@ -1,5 +1,18 @@
 {% extends "procedures/procedurebase.html" %}
 
 {% block content %}
+<br>
+<form method="POST" name="eventfeedback">
+    <label for="EVENT">Choose the Event:</label>
+    <select name="Event" id="event">
+      <option value="Event-1">Event-1</option>
+      <option value="Event-2">Event-2</option>
+      <option value="Intro to GitHub">Intro to GitHub</option>
+      <option value="Event-7">Event-7</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
 
 {% endblock %}
