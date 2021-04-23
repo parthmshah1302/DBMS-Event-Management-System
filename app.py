@@ -539,5 +539,14 @@ def filtervenue():
 def userbill():
     return render_template("procedures/userbill.html")
 
+## For Functions
+@app.route('/event_spcount', methods=['GET','POST'])
+def Fevent_sponsorcount():
+    return render_template("procedures/event_spcount.html")
+
+@app.route('/event_count', methods=['GET','POST'])
+def Fevent_count():
+    return render_template("procedures/event_count.html")
+
 if __name__=='__main__':
     app.run(debug=True)   

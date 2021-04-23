@@ -1,6 +1,8 @@
 {% extends "procedures/procedurebase.html" %}
 
 {% block content %}
+<h1 style="text-align: center">Extract Registered Users Data for Event</h1>
+<p style="text-align: center;">Calling the procedure registerdusers()</p>
 <br>
 <form method="POST" name="extractusers">
     <label for="EVENT">Choose the Event:</label>
@@ -15,7 +17,7 @@
   </form>
 <br>
 <br>
-<h1>Attendees Data</h1>
+<h2 style="text-align: center">Attendees Data</h2>
 <table border="1" class ="table table-hover table-bordered">
     <th>Email ID</th>
     <th>Name</th>

@@ -1,6 +1,8 @@
 {% extends "procedures/procedurebase.html" %}
 
 {% block content %}
+<h1 style="text-align: center">List of Particular Customer Bills</h1>
+<p style="text-align: center;">Calling the procedure customer_bill()</p>
 <form method="POST" name="userbill">
     <br>
     <label for="Email">Enter Email:</label>
@@ -12,7 +14,7 @@
     <input type="submit" value="Submit">
   </form>
 
-<h1>List of Bills</h1>
+<h2 style="text-align: center;">List of Bills</h2>
 <table border="1" class ="table table-hover table-bordered">
     <th>Bill Number</th>
     <th>Order Number</th>
