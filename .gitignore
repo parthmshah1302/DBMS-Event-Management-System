@@ -3,4 +3,5 @@ db.yaml
 env
 poozan.py
 __pycache__
+.vscode
 

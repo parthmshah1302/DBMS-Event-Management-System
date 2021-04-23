@@ -1,0 +1,21 @@
+{% extends "procedures/procedurebase.html" %}
+
+{% block content %}
+<h1 style="text-align: center">Number of Sponsors by Event</h1>
+<p style="text-align: center;">Calling the function event_spcount()</p>
+<br>
+<form method="POST" name="calctotal">
+    <label for="EVENT">Choose the Event:</label>
+    <select name="Department" id="event">
+      <option value="Fin">Event-1</option>
+      <option value="Event-2">Event-2</option>
+      <option value="Intro to GitHub">Intro to GitHub</option>   
+      <option value="Event-7">Event-7</option>
+    </select>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+<br>
+<br>
+<h2>Total Number of Sponsors are :</h2> <h2>3</h2>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "procedures/procedurebase.html" %}
+
+{% block content %}
+<h1 style="text-align: center">Number of Events by Venue</h1>
+<p style="text-align: center;">Calling the function event_count()</p>
+<br>
+    <form method="POST" name="filtervenue">
+        <label for="EVENT">Choose the Venue:</label>
+        <select name="Location" id="venue">
+          <option value="Offline">Offline</option>
+          <option value="Online">Online</option>
+          <option value="Ahmedabad">Ahmedabad</option>
+          <option value="Surat">Surat</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
+    <br>
+    <br>
+    <h2 style="text-align: center;">Number of Events in this Venue is 3</h2>
+    <br>
+{% endblock %}

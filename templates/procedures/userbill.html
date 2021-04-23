@@ -1,0 +1,46 @@
+{% extends "procedures/procedurebase.html" %}
+
+{% block content %}
+<h1 style="text-align: center">List of Particular Customer Bills</h1>
+<p style="text-align: center;">Calling the procedure customer_bill()</p>
+<form method="POST" name="userbill">
+    <br>
+    <label for="Email">Enter Email:</label>
+    <input type="text" id="email" name="email">
+    <br>
+    <label for="Pass">Enter Password:</label>
+    <input type="password" id="Pass" name="Pass">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+<h2 style="text-align: center;">List of Bills</h2>
+<table border="1" class ="table table-hover table-bordered">
+    <th>Bill Number</th>
+    <th>Order Number</th>
+    <th>Amount</th>
+    <th>Tax</th>
+    <th>Delivery Charge</th>
+    <th>Final Amount</th>
+    <th>Bill Date</th>
+    <tr>
+        <td>2</td>
+        <td>25</td>
+        <td>100</td>
+        <td>18</td>
+        <td>2</td>
+        <td>120</td>
+        <td>15-04-2021</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>27</td>
+        <td>50</td>
+        <td>18</td>
+        <td>2</td>
+        <td>70</td>
+        <td>15-04-2021</td>
+      </tr>
+
+</table>
+{% endblock %}

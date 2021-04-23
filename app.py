@@ -480,7 +480,7 @@ def departmentData():
 #def team():
 
       
-@app.route('/filtervenue')
+@app.route('/realfiltervenue')
 def filtven():
     try:
         connection = mysql.connector.connect(host='localhost',database='dbmsEventManagement',user='admin',password='password')
@@ -505,6 +505,48 @@ def filtven():
     #     venuelist.append(i)
     #     print("=====",venuelist)
     # return('venuelist')
+
+### Code for HTML Procedures
+@app.route('/procedures', methods=['GET','POST'])
+def procedures():
+    return render_template("procedures/procedures.html")
+
+@app.route('/calctotalfromevent', methods=['GET','POST'])
+def calctotalfromevent():
+    return render_template("procedures/calctotalfromevent.html")
+
+@app.route('/contactus', methods=['GET','POST'])
+def contactUs():
+    return render_template("procedures/contactus.html")
+
+@app.route('/eventfeedback', methods=['GET','POST'])
+def procedureEventFeedback():
+    return render_template("procedures/eventfeedback.html")
+
+@app.route('/eventsponsors', methods=['GET','POST'])
+def proceduresEventSponsors():
+    return render_template("procedures/eventsponsors.html")
+
+@app.route('/extractedusers', methods=['GET','POST'])
+def proceudureExtractedUsers():
+    return render_template("procedures/extractedusers.html")
+
+@app.route('/filtervenue', methods=['GET','POST'])
+def filtervenue():
+    return render_template("procedures/filtervenue.html")
+
+@app.route('/userbill', methods=['GET','POST'])
+def userbill():
+    return render_template("procedures/userbill.html")
+
+## For Functions
+@app.route('/event_spcount', methods=['GET','POST'])
+def Fevent_sponsorcount():
+    return render_template("procedures/event_spcount.html")
+
+@app.route('/event_count', methods=['GET','POST'])
+def Fevent_count():
+    return render_template("procedures/event_count.html")
 
 if __name__=='__main__':
     app.run(debug=True)   

@@ -1,0 +1,43 @@
+{% extends "procedures/procedurebase.html" %}
+
+{% block content %}
+<h1 style="text-align: center">Extract Registered Users Data for Event</h1>
+<p style="text-align: center;">Calling the procedure registerdusers()</p>
+<br>
+<form method="POST" name="extractusers">
+    <label for="EVENT">Choose the Event:</label>
+    <select name="Event" id="event">
+      <option value="Event-1">Event-1</option>
+      <option value="Event-2">Event-2</option>
+      <option value="Intro to GitHub">Intro to GitHub</option>
+      <option value="Event-7">Event-7</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+<br>
+<br>
+<h2 style="text-align: center">Attendees Data</h2>
+<table border="1" class ="table table-hover table-bordered">
+    <th>Email ID</th>
+    <th>Name</th>
+
+        <tr>
+            <td>m@g.com</td>
+            <td>Malav Doshi</td>
+        </tr>
+        <tr>
+            <td>samkitkundalia@gmail.com</td>
+            <td>Samkit</td>
+        </tr>
+        <tr>
+            <td>parthshah@yahoo.com</td>
+            <td>Parth</td>
+        </tr>
+
+</table>
+
+
+
+
+{% endblock %}

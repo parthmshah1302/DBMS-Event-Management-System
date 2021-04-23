@@ -1,0 +1,61 @@
+{% extends "procedures/procedurebase.html" %}
+
+{% block content %}
+<h1 style="text-align: center">Department Data</h1>
+<p style="text-align: center;">Calling the procedure contact_us()</p>
+<br>
+<form method="POST" name="contactus">
+    <label for="EVENT">Choose the Department:</label>
+    <select name="Department" id="event">
+      <option value="Fin">Finance</option>
+      <option value="Event-2">Reception</option>
+      <option value="Intro to GitHub">Registration</option>
+      <option value="Event-7">BackStage</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+<br>
+<br>
+<h2 style="text-align: center">Team Data</h2>
+<table border="1" class ="table table-hover table-bordered">
+    <th>Department Name</th>
+    <th>Team Member Id</th>
+    <th>Member Name</th>
+    <th>Mobile Number</th>
+    <th>Position</th>
+        <tr>
+            <td>Finance</td>
+            <td>106</td>
+            <td>Malav Doshi</td>
+            <td>9999988888</td>
+            <td>Manager</td>
+        </tr>
+        <tr>
+            <td>Finance</td>
+            <td>103</td>
+            <td>Samkit K</td>
+            <td>9124124488</td>
+            <td>Accountant</td>
+        </tr>
+        <tr>
+            <td>Finance</td>
+            <td>201</td>
+            <td>John Wick</td>
+            <td>5545458338</td>
+            <td>Accountant</td>
+        </tr>
+        <tr>
+            <td>Finance</td>
+            <td>104</td>
+            <td>Ramesh Patel</td>
+            <td>9236024232</td>
+            <td>Member</td>
+        </tr>
+
+</table>
+
+
+
+
+{% endblock %}

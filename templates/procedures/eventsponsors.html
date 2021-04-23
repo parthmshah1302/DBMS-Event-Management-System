@@ -1,0 +1,42 @@
+{% extends "procedures/procedurebase.html" %}
+
+{% block content %}
+<h1 style="text-align: center">Extract Sponsors for particular Event</h1>
+<p style="text-align: center;">Calling the procedure sponsor_event()</p>
+<br>
+<form method="POST" name="extractusers">
+    <label for="EVENT">Choose the Event:</label>
+    <select name="Event" id="event">
+      <option value="Event-1">Event-1</option>
+      <option value="Event-2">Event-2</option>
+      <option value="Intro to GitHub">Intro to GitHub</option>
+      <option value="Event-7">Event-7</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+<br>
+<br>
+<h2 style="text-align: center">Sponsor List</h2>
+<table border="1" class ="table table-hover table-bordered">
+    <th>Event Name</th>
+    <th>Sponsor Name</th>
+
+        <tr>
+            <td>Event-7</td>
+            <td>AU</td>
+        </tr>
+        <tr>
+            <td>Event-7</td>
+            <td>Samkit</td>
+        </tr>
+        <tr>
+            <td>Event-7</td>
+            <td>ABC Tech</td>
+        </tr>
+
+</table>
+
+
+
+{% endblock %}
