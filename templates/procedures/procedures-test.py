@@ -96,6 +96,13 @@ def Fevent_sponsorcount():
 
 @app.route('/event_count', methods=['GET','POST'])
 def Fevent_count():
-    return render_template("procedures/event_count.html")
+    if request.method == 'POST':
+            venueform = request.form
+            city_name = venueform['event_name']
+            cur = mysqlcon.connection.cursor()
+            resultValue = cur.execute("SELECT event_count",(city_name))
+            mysqlcon.connection.commit()
+            cur.close()
+    return render_template("procedures/event_count.html",resultValue)
 
 # -------------------------------------------------
