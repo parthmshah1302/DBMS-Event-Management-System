@@ -84,7 +84,14 @@ def userbill():
 ## For Functions
 @app.route('/event_spcount', methods=['GET','POST'])
 def Fevent_sponsorcount():
-    return render_template("procedures/event_spcount.html")
+    if request.method == 'POST':
+            sponsorform = request.form
+            event_name = sponsorform['event_name']
+            cur = mysqlcon.connection.cursor()
+            resultValue = cur.execute("SELECT event_spcount",(event_name))
+            mysqlcon.connection.commit()
+            cur.close()
+    return render_template("procedures/event_spcount.html",resultValue)
 # -------------------------------------------------
 
 @app.route('/event_count', methods=['GET','POST'])
